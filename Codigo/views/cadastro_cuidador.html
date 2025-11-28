@@ -1,0 +1,59 @@
+<!-- Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel  -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro Cuidador - Fio Vital</title>
+    <link rel="stylesheet" href="../public/css/cadastro_cuidador.css">
+    <link rel="shortcut icon" href="../public/images/Logo_minimalista.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <div class="lado-esquerdo">
+            <h1>Fio Vital</h1>
+            <p>Cuide do seu coração com inteligência</p>
+            <ul>
+                <li>Monitoramento 24 horas com IA avançada</li>
+                <li>Alertas instantâneos para emergências</li>
+                <li>Dashboard completo para profissionais</li>
+                <li>Segurança e privacidade garantidas</li>
+                <li>Análise preditiva de saúde</li>
+            </ul>
+        </div>
+        <div class="lado-direito">
+            <h2>Criar Conta</h2>
+            <p>Preencha os dados abaixo para começar</p>
+
+            <form id="form-cuidador">
+                <div class="campos">
+                    <label>Nome Completo *</label>
+                    <input type="text" id="nome" placeholder="Seu Nome Completo" required>
+
+                    <label>E-mail *</label>
+                    <input type="email" id="email" placeholder="Seu@email.com" required>
+
+                    <label>Telefone *</label>
+                    <input type="tel" id="telefone" placeholder="(11) 99999-9999" required>
+
+                    <label>Data de Nascimento *</label>
+                    <input type="date" id="dataNascimento" required>
+
+                    <label>Especialidade *</label>
+                    <input type="text" id="especialidade" placeholder="Sua Especialidade" required>
+
+                    <label>Senha *</label>
+                    <input type="password" id="senha" placeholder="Mínimo 8 caracteres" required>
+
+                    <label>Confirmar Senha *</label>
+                    <input type="password" id="confirmarSenha" placeholder="Confirme sua senha" required>
+                </div>
+
+                <button type="submit">Criar Conta</button>
+            </form>
+            <p class="login">Já tem uma conta? <a class="login" href="login.html">Faça login</a></p>
+        </div>
+    </div>
+    <script src="../public/js/cuidador.js"></script>
+</body>
+</html>

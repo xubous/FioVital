@@ -1,0 +1,63 @@
+<!-- Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel  -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/paciente.css">
+    <title>Dashboard - Fio Vital</title>
+    <link rel="shortcut icon" href="../public/images/Logo_minimalista.png" type="image/x-icon">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <img class="imagem_logo" src="../public/images/logo_image.png" alt="imagem_logo">
+            <div class="user-info">
+                <div class="user-avatar">👤</div>
+                <div class="user-details">
+                    <h3>Maria Silva</h3>
+                    <p>maria.silva@email.com</p>
+                </div>
+                <a href="cadastro.html" class="logout-btn">Sair</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Coluna Esquerda -->
+        <div class="left-column">
+            <!-- Card de Status do Coracao -->
+            <div class="status-card">
+                <div class="status-header">
+                    <h2 class="status-title">Monitor Cardíaco em Tempo Real</h2>
+                </div>
+                <div class="current-bpm">
+                    <div>
+                        <div class="bpm-value" id="currentBPM">--</div>
+                    </div>
+                    <div>
+                        <div id="status" style="font-size: 1.3rem; font-weight: 700; color: #10b981;">Aguardando...</div>
+                        <div class="bpm-label">Status Atual</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna Direita -->
+        <div class="right-column">
+            <!-- Alertas Recentes -->
+            <div class="sidebar-card" id="alertas-recentes">
+                <h3 class="sidebar-title">Alertas Recentes</h3>
+                <p style="color: #999; text-align: center; padding: 2rem 0;">
+                    Carregando alertas...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../public/js/paciente.js"></script>
+</body>
+</html>

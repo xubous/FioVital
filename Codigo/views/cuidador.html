@@ -1,0 +1,93 @@
+<!-- Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel  -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fio Vital - Dashboard</title>
+  <link rel="stylesheet" href="../public/css/cuidador.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="shortcut icon" href="../public/images/Logo_minimalista.png" type="image/x-icon">
+</head>
+<body class="gc-body">
+
+  <!-- HEADER -->
+  <header class="gc-header">
+    <div class="gc-logo">
+      <h1>Fio Vital</h1>
+    </div>
+    <nav></nav>
+    <div class="gc-user">
+      <div class="gc-user-info">
+        <p class="gc-user-nome" id="cuidador-nome">Nome do cuidador</p>
+        <small class="gc-user-funcao" id="cuidador-email">Email: </small>
+      </div>
+      <button class="gc-btn-logout" id="btn-logout">Sair</button>
+    </div>
+  </header>
+
+  <!-- CONTEUDO -->
+  <main class="gc-main">
+
+    <!-- Sidebar -->
+    <aside class="gc-sidebar">
+      <h2>Meus Pacientes</h2>
+      <div class="gc-search">
+        <input type="text" id="email-paciente" placeholder="Digite o e-mail do paciente...">
+        <button id="btn-adicionar-paciente">+ Adicionar</button>
+      </div>
+      <ul class="gc-lista-pacientes" id="gc-lista-pacientes"></ul>
+    </aside>
+
+    <!-- Mapa -->
+    <section class="gc-mapa">
+      <div class="gc-mapa-header">
+        <h2>Localização em Tempo Real</h2>
+        <div>
+          <button class="gc-btn-centralizar" onclick="centralizarMapa()">Centralizar</button>
+          <button class="gc-btn-atualizar" onclick="atualizarMapa()">Atualizar</button>
+        </div>
+      </div>
+      <div class="gc-mapa-container" id="gc-mapa-container">
+        <div id="map" style="height: 100%; width: 100%;"></div>
+      </div>
+    </section>
+
+    <!-- Painel Paciente -->
+    <aside class="gc-painel" id="gc-painel-paciente">
+      <h2 id="gc-nome-paciente">Selecione um paciente</h2>
+      <p id="gc-info-paciente" class="gc-subinfo">Clique em um paciente da lista para ver os detalhes</p>
+
+      <div id="gc-detalhes-paciente" class="gc-detalhes" style="display:none;">
+        <!-- Endereco -->
+        <div class="gc-card">
+          <h3>Endereço</h3>
+          <p id="gc-endereco-paciente">-</p>
+        </div>
+
+        <!-- Sinais Vitais -->
+        <div class="gc-card">
+          <h3>Sinais Vitais</h3>
+          <p>Frequência Cardíaca: <span id="gc-bpm-atual">0 BPM</span></p>
+          <p>Última Medição: <span id="gc-ultima-medicao">-</span></p>
+          <p>Tendência: <span id="gc-tendencia">-</span></p>
+        </div>
+
+        <!-- Alertas Recentes -->
+        <div class="gc-card gc-alertas">
+          <h3>Alertas Recentes</h3>
+          <ul id="gc-lista-alertas"></ul>
+        </div>
+
+        <a href="detalhe.html" class="gc-btn-mais-info">+ Mais Informações</a>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Script JS -->
+  <script src="../public/js/cuidador.js"></script>
+</body>
+</html>

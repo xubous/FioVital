@@ -1,0 +1,296 @@
+/* Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #760B20;
+  padding: 20px;
+}
+
+/* Container principal */
+.container-login {
+  display: flex;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  max-width: 1000px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.container-login:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Painel esquerdo */
+.painel-esquerdo {
+  flex: 1;
+  background: linear-gradient(to right, #DC143D, #760B20);
+  color: white;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo-icon {
+  font-size: 2.5rem;
+  margin-right: 15px;
+}
+
+.painel-esquerdo h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.painel-esquerdo h2 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.painel-esquerdo p {
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.lista-recursos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lista-recursos li {
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+
+.lista-recursos li i {
+  margin-right: 10px;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+/* Painel direito */
+.painel-direito {
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.painel-direito h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #333333;
+}
+
+.painel-direito p {
+  margin-bottom: 30px;
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+
+/* Seletor de perfil */
+.seletor-perfil {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.perfil {
+  flex: 1;
+  border: 2px solid #e9ecef;
+  border-radius: 15px;
+  padding: 25px 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+}
+
+.perfil:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border-color: #ff4d6d;
+}
+
+.perfil.ativo {
+  border-color: #c8102e;
+  background: linear-gradient(135deg, rgba(220, 20, 61, 0.05) 0%, rgba(118, 11, 32, 0.05) 100%);
+  box-shadow: 0 5px 15px rgba(220, 20, 61, 0.15);
+}
+
+.icone-perfil {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  height: 70px;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 50%;
+  margin: 0 auto 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.perfil strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #333333;
+}
+
+.descricao-perfil {
+  font-size: 0.85rem;
+  color: #6c757d;
+  line-height: 1.4;
+}
+
+/* Botao */
+.botao {
+  background: linear-gradient(to right, #DC143D, #760B20);
+  color: #ffffff;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(220, 20, 61, 0.3);
+  margin-top: 10px;
+}
+
+.botao:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 20, 61, 0.4);
+}
+
+.botao:disabled {
+  background: #e9ecef;
+  color: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Link de login */
+.link-cadastro {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.9rem;
+}
+
+.login {
+  color: #6c757d;
+}
+
+.login a {
+  color: #DC143D;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.login a:hover {
+  color: #760B20;
+  text-decoration: underline;
+}
+
+/* Separador */
+.separador {
+  text-align: center;
+  margin: 25px 0 15px;
+  color: #6c757d;
+  font-size: 0.9rem;
+  position: relative;
+}
+
+.separador::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e9ecef;
+  z-index: 1;
+}
+
+.separador span {
+  background: #ffffff;
+  padding: 0 15px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Botoes sociais */
+.botoes-sociais {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.social {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1.5px solid #e9ecef;
+  cursor: pointer;
+  background: #ffffff;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.social:hover {
+  border-color: #DC143D;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.google {
+  color: #DB4437;
+}
+
+.microsoft {
+  color: #0078D4;
+}
+
+/* Seguranca */
+.seguranca {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: #6c757d;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}

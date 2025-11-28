@@ -1,0 +1,177 @@
+/* Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel */
+
+/* RESET */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+/* CONTAINER PRINCIPAL */
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* LADO ESQUERDO */
+.lado-esquerdo {
+    width: 45%;
+    background: linear-gradient(to right, #DC143D, #760B20);
+    color: white;
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: flex-start;
+}
+
+.lado-esquerdo h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.lado-esquerdo p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.lado-esquerdo ul {
+    list-style: none;
+}
+
+.lado-esquerdo li {
+    font-size: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.lado-esquerdo li::before {
+    content: "✔";
+    color: white;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+/* LADO DIREITO */
+.lado-direito {
+    width: 55%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 80px;
+}
+
+.lado-direito h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #222;
+}
+
+.lado-direito p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* FORMULARIO */
+#form-paciente {
+    width: 100%;
+    max-width: 450px;
+}
+
+.campos label {
+    font-weight: 600;
+    font-size: 14px;
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.campos input,
+.campos textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    margin-bottom: 18px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.campos input:focus,
+.campos textarea:focus {
+    border-color: #c9184a;
+    box-shadow: 0 0 5px rgba(201, 24, 74, 0.3);
+}
+
+/* CHECKBOXES */
+.checkboxes {
+    margin: 20px 0;
+    font-size: 14px;
+    color: #444;
+}
+
+.checkboxes label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.checkboxes a {
+    color: #c9184a;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.checkboxes a:hover {
+    text-decoration: underline;
+}
+
+/* BOTAO */
+button {
+    width: 100%;
+    padding: 14px;
+    background: #c9184a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #a4163a;
+}
+
+/* LINK DE LOGIN */
+.login {
+    margin-top: 15px;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.login {
+    color: #c9184a;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login {
+    text-decoration: underline;
+    text-decoration: none;
+    text-align: center;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mapa — Praça da Sé</title>
+
+    <!-- CSS do Leaflet -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      #map {
+        height: 100vh;
+        width: 100%;
+      }
+      .controls {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 6px;
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      }
+      .controls button {
+        margin: 0 4px;
+        padding: 6px 10px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+    <div class="controls">
+      <button id="zoomIn">+</button>
+      <button id="zoomOut">−</button>
+      <button id="resetZoom">Centralizar</button>
+    </div>
+
+    <!-- Script do Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      // Coordenadas da Praça da Sé, São Paulo
+      const LAT = -23.550520;
+      const LNG = -46.633308;
+      const INITIAL_ZOOM = 19;
+
+      // Cria o mapa centralizado na Praça da Sé
+      const map = L.map("map", { zoomControl: false }).setView([LAT, LNG], INITIAL_ZOOM);
+
+      // Adiciona o mapa base (OpenStreetMap)
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      // Adiciona marcador fixo
+      const marker = L.marker([LAT, LNG])
+        .addTo(map)
+        .bindPopup("📍 Praça da Sé - São Paulo, SP")
+        .openPopup();
+
+      // Controles de zoom
+      document.getElementById("zoomIn").onclick = () => map.zoomIn();
+      document.getElementById("zoomOut").onclick = () => map.zoomOut();
+      document.getElementById("resetZoom").onclick = () => map.setView([LAT, LNG], INITIAL_ZOOM);
+    </script>
+  </body>
+</html>

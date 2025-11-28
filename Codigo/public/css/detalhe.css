@@ -1,0 +1,695 @@
+/* Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8f9ff;
+    color: #333;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(to right, #DC143D, #760B20);
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.logo::before {
+    margin-right: 0.5rem;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.back-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+/* Main Container */
+.main-container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2rem;
+}
+
+/* Patient Header */
+.patient-header {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.patient-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(to right, #DC143D, #760B20);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+}
+
+.patient-basic-info {
+    flex: 1;
+}
+
+.patient-name-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.patient-id-status {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.patient-id {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-indicator.critical {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.patient-basic-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.card-header {
+    background: linear-gradient(to right, #DC143D, #760B20);
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+/* Vital Signs Card */
+.vital-signs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.vital-item {
+    background: #f8f9ff;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.vital-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.vital-value.critical {
+    color: #dc2626;
+}
+
+.vital-value.warning {
+    color: #f59e0b;
+}
+
+.vital-value.normal {
+    color: #059669;
+}
+
+.vital-label {
+    font-size: 0.8rem;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Chart Container */
+.chart-container {
+    height: 200px;
+    background: #f8f9ff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.chart-placeholder {
+    color: #667eea;
+    font-size: 3rem;
+}
+
+.chart-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    top: 50%;
+    transform: translateY(-50%);
+    animation: pulse-line 2s ease-in-out infinite;
+}
+
+@keyframes pulse-line {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: translateY(-50%) scaleX(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-50%) scaleX(1.2);
+    }
+}
+
+/* Location Card */
+.location-info {
+    background: #f0f8ff;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.address {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.coordinates {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.mini-map {
+    height: 150px;
+    background: linear-gradient(135deg, #e8f4fd 0%, #f0f8ff 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.map-marker {
+    width: 30px;
+    height: 30px;
+    background: #dc2626;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    animation: bounce-marker 2s ease-in-out infinite;
+}
+
+@keyframes bounce-marker {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Acoes comunicacao */
+.communication-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.action-buttons {
+    display: grid;
+    gap: 1rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn.notification {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+}
+
+.action-btn.call {
+    background: linear-gradient(45deg, #10b981, #059669);
+    color: white;
+}
+
+.action-btn.whatsapp {
+    background: linear-gradient(45deg, #25d366, #128c7e);
+    color: white;
+}
+
+.action-btn.emergency {
+    background: linear-gradient(45deg, #ef4444, #dc2626);
+    color: white;
+}
+
+.action-icon {
+    font-size: 1.5rem;
+}
+
+.action-details {
+    flex: 1;
+}
+
+.action-title {
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.action-desc {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+/* Alerts Section */
+.alerts-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.alert-item {
+    padding: 1rem;
+    border-left: 4px solid;
+    background: #f8f9ff;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.alert-time {
+    font-size: 0.7rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.alert-message {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Secao */
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-date {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.history-value {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.notification-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    display: none;
+    min-width: 400px;
+}
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: none;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.popup-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.popup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.popup-textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e5e5e5;
+    border-radius: 8px;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.popup-btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.popup-btn.primary {
+    background: #667eea;
+    color: white;
+}
+
+.popup-btn.secondary {
+    background: #e5e5e5;
+    color: #666;
+}
+
+/* Notificacoes */
+.notification-container {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 420px;
+}
+.notification {
+    background: white;
+    border-radius: 16px;
+    padding: 18px 22px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    min-width: 250px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+.notification.removing {
+    animation: slideOut 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+.notification.danger {
+    background: #ffe5e5;
+}
+.notification.warning {
+    background: #fff8e5;
+}
+.notification.success {
+    background: #e5ffe5;
+}
+
+.notification-icon {
+    font-size: 36px;
+    flex-shrink: 0;
+    font-weight: 900;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    animation: notificationPulse 2s ease-in-out infinite;
+}
+
+@keyframes notificationPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 700;
+    font-size: 17px;
+    margin: 0 0 6px 0;
+    color: #1f2937;
+}
+
+.notification-message {
+    font-size: 14px;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.notification-time {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+.notification-close {
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    font-size: 20px;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    font-weight: 700;
+}
+.notification-close:hover {
+    background: rgba(0, 0, 0, 0.12);
+    color: #1f2937;
+}
+.notification-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background: #e91e63;
+    border-radius: 0 0 16px 0;
+    animation: progressBar 5s linear forwards;
+}
+.notification.danger .notification-progress {
+    background: #ef4444;
+}
+.notification.warning .notification-progress {
+    background: #f59e0b;
+}
+.notification.success .notification-progress {
+    background: #10b981;
+}

@@ -1,0 +1,239 @@
+/* Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #760B20;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container-login {
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    height: 600px;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.container-login:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Lado Esquerdo */
+.lado-esquerdo {
+    flex: 1;
+    background: linear-gradient(to right, #DC143D, #760B20);
+    color: #ffffff;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.lado-esquerdo::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.lado-esquerdo::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -80px;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo-icon {
+    font-size: 2.5rem;
+    margin-right: 15px;
+    color: #ffffff;
+}
+
+.lado-esquerdo h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.lado-esquerdo p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.features li {
+    margin: 15px 0;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.features li i {
+    margin-right: 10px;
+    color: #ffffff;
+    font-size: 1.2rem;
+}
+
+.features li::before {
+    content: none; 
+}
+
+/* Lado Direito */
+.lado-direito {
+    flex: 1;
+    background: #ffffff;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-box {
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.login-box h2 {
+    color: #333333;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.login-box p {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+}
+
+/* Formulario */
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333333;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #e1e5e9;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+.form-control:focus {
+    border-color: #b91c1c;
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+    outline: none;
+    background-color: #ffffff;
+}
+
+.input-icon {
+    position: absolute;
+    right: 16px;
+    top: 42px;
+    color: #6c757d;
+}
+
+/* Botao */
+.btn-entrar {
+    width: 100%;
+    background: linear-gradient(to right, #DC143D, #760B20);
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(185, 28, 28, 0.3);
+}
+
+.btn-entrar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(185, 28, 28, 0.4);
+}
+
+/* Mensagem de erro */
+.mensagem-erro {
+    text-align: center;
+    margin-top: 15px;
+    color: #b91c1c;
+    font-weight: 500;
+    font-size: 0.9rem;
+    min-height: 20px;
+}
+
+/* Link de cadastro */
+.link-cadastro {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.link-cadastro a {
+    color: #b91c1c;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.link-cadastro a:hover {
+    color: #7f1d1d;
+    text-decoration: underline;
+}

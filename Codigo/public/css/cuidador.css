@@ -1,0 +1,496 @@
+/* Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel */
+
+/*  RESET GERAL  */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+body.gc-body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f8fafc;
+  color: #1f2937;
+}
+
+/* lista de pacientes */
+.gc-paciente-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.gc-paciente-item:hover {
+  background-color: #f5f5f5;
+}
+
+.gc-paciente-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gc-paciente-nome {
+  flex: 1;
+}
+
+.gc-btn-remover {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+  font-size: 14px;
+}
+
+.gc-btn-remover:hover {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.gc-paciente-vazio {
+  padding: 10px;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+
+/*  HEADER  */
+.gc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #b91c1c, #7f1d1d);
+  color: white;
+  padding: 12px 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.gc-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gc-logo img {
+  width: 36px;
+  height: 36px;
+}
+
+.gc-logo h1 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.gc-menu {
+  display: flex;
+  list-style: none;
+  gap: 24px;
+  text-decoration: none;
+}
+
+.gc-menu li {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.gc-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gc-user img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #fef2f2;
+}
+
+.gc-user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.gc-user-nome {
+  font-weight: bold;
+}
+
+.gc-user-funcao {
+  font-size: 12px;
+  color: #e5e7eb;
+}
+
+.gc-btn-logout {
+  background: #374151;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.gc-btn-logout:hover {
+  background: #1f2937;
+}
+
+.relatorio {
+    text-decoration: none;
+    color: white;
+}
+
+/*  LAYOUT PRINCIPAL  */
+.gc-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/*  SIDEBAR  */
+.gc-sidebar {
+  width: 22%;
+  background: #fff;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gc-sidebar h2 {
+  color: #b91c1c;
+  margin-bottom: 14px;
+}
+
+.gc-search {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gc-sidebar input {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.gc-sidebar button {
+  background: linear-gradient(to right, #dc2626, #7f1d1d);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.gc-sidebar button:hover {
+  transform: scale(1.03);
+}
+
+/*  LISTA DE PACIENTES  */
+.gc-lista-pacientes {
+  list-style: none;
+  margin-top: 16px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.gc-lista-pacientes li {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.gc-lista-pacientes li:hover {
+  background: #f9fafb;
+  transform: translateY(-2px);
+}
+
+.gc-lista-pacientes li.active {
+  border: 2px solid #b91c1c;
+  background: #fef2f2;
+}
+
+.gc-btn-update {
+  color: #2563eb;
+  border: none;
+  background: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.gc-btn-remove {
+  color: #dc2626;
+  border: none;
+  background: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/*  MAPA  */
+.gc-mapa {
+  width: 38%;
+  background: #f9fafb;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gc-mapa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.gc-mapa-header h2 {
+  color: #b91c1c;
+}
+
+.gc-mapa-header button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.gc-btn-centralizar {
+  background: linear-gradient(to right, #dc2626, #7f1d1d);
+  color: white;
+}
+
+.gc-btn-atualizar {
+  background: #d1d5db;
+}
+
+.gc-btn-centralizar:hover {
+  opacity: 0.9;
+}
+
+.gc-mapa-container {
+  flex: 1;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-style: italic;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.05);
+}
+
+/*  PAINEL PACIENTE  */
+.gc-painel {
+  width: 40%;
+  background: #fff;
+  border-left: 1px solid #e5e7eb;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gc-painel h2 {
+  color: #1e3a8a;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.gc-subinfo {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.gc-card {
+  background: #f9fafb;
+  padding: 14px;
+  border-radius: 10px;
+  margin-top: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.gc-card h3 {
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.gc-alertas ul {
+  margin-left: 20px;
+  list-style-type: disc;
+  color: #b91c1c;
+  font-size: 13px;
+}
+
+/*  BOTOES DE ACOES  */
+.gc-acoes {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.gc-acoes button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.gc-btn-emergencia { background: #dc2626; }
+.gc-btn-ligar { background: #9333ea; }
+.gc-btn-msg { background: #16a34a; }
+.gc-btn-historico { background: #2563eb; }
+
+.gc-acoes button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.gc-btn-mais-info {
+  margin-top: 20px;
+  display: inline-block;
+  width: 100%;
+  padding: 12px;
+  text-align: center;
+  border-radius: 8px;
+  background: linear-gradient(to right, #dc2626, #7f1d1d);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.gc-btn-mais-info:hover {
+  transform: scale(1.03);
+}
+
+/*  SCROLLBAR  */
+.gc-lista-pacientes::-webkit-scrollbar {
+  width: 8px;
+}
+
+.gc-lista-pacientes::-webkit-scrollbar-thumb {
+  background: #b91c1c;
+  border-radius: 8px;
+}
+
+/*  MODAL */
+.gc-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.gc-modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px 32px;
+  width: 420px;
+  max-width: 90%;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  animation: modalShow 0.3s ease;
+}
+
+@keyframes modalShow {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.gc-modal-content h3 {
+  margin-bottom: 18px;
+  color: #b91c1c;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Formulario dentro do modal */
+.gc-form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.gc-form-group label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 5px;
+}
+
+.gc-form-group input {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.gc-form-group input:focus {
+  border-color: #b91c1c;
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+  outline: none;
+}
+
+/* Botoes do modal */
+.gc-modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.gc-btn-cancelar,
+.gc-btn-salvar {
+  flex: 1;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.gc-btn-cancelar {
+  background: #e5e7eb;
+  color: #374151;
+  margin-right: 10px;
+}
+
+.gc-btn-salvar {
+  background: linear-gradient(to right, #dc2626, #7f1d1d);
+  color: white;
+}
+
+.gc-btn-cancelar:hover,
+.gc-btn-salvar:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}

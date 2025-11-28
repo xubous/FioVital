@@ -1,0 +1,208 @@
+<!-- Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel  -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/detalhe.css">
+    <title>Detalhes do Paciente - Fio Vital</title>
+    <link rel="shortcut icon" href="../public/images/Logo_minimalista.png" type="image/x-icon">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">Fio Vital</div>
+            <a href="cuidador.html" class="back-btn">
+                ← Voltar ao Dashboard
+            </a>
+            <div class="user-info">
+                <div class="user-avatar">👨‍⚕️</div>
+                <div>
+                    <div id="cuidador-nome" style="font-weight: 600;">Carregando...</div>
+                    <div id="cuidador-especialidade" style="font-size: 0.8rem; opacity: 0.8;">Cuidador</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="main-content">
+            <div class="patient-header">
+                <div class="patient-avatar">👤</div>
+                <div class="patient-basic-info">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h1 class="patient-name-title">
+                            <span id="paciente-nome-display">Carregando...</span>
+                            <input type="text" id="paciente-nome-edit" class="edit-field" style="display: none;">
+                        </h1>
+                        <!-- <button class="edit-btn" onclick="toggleEditMode()" id="btn-editar">✏️ Editar</button> -->
+                    </div>
+                    <div class="patient-id-status">
+                        <span class="patient-id" id="paciente-id">ID: #</span>
+                        <div class="status-indicator" id="status-indicator">
+                            <span class="status-dot"></span>
+                            <span id="status-text">Carregando...</span>
+                        </div>
+                    </div>
+                    <div class="patient-basic-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Idade</span>
+                            <span id="paciente-idade">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Telefone</span>
+                            <span id="paciente-telefone-display">-</span>
+                            <input type="text" id="paciente-telefone-edit" class="edit-field" style="display: none;">
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Data Nasc.</span>
+                            <span id="paciente-data-nascimento-display">-</span>
+                            <input type="date" id="paciente-data-nascimento-edit" class="edit-field"
+                                style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informacoes -->
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Informações de Contato</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <span class="contact-label">Email:</span>
+                                <span id="paciente-email-display">carregando...</span>
+                                <input type="email" id="paciente-email-edit" class="edit-field" style="display: none;">
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">Endereço:</span>
+                                <span id="paciente-endereco-display">carregando...</span>
+                                <input type="text" id="paciente-endereco-edit" class="edit-field"
+                                    style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Historico medico -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Histórico Médico</span>
+                    </div>
+                    <div class="card-content">
+                        <div id="paciente-historico-display" class="historico-text">
+                            Carregando histórico médico...
+                        </div>
+                        <textarea id="paciente-historico-edit" class="edit-textarea" style="display: none;"
+                            placeholder="Digite o histórico médico do paciente..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sinais vitais -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Sinais Vitais em Tempo Real</span>
+                </div>
+                <div class="card-content">
+                    <div class="vital-signs-grid">
+                        <div class="vital-item">
+                            <div class="vital-value" id="bpm-atual">-</div>
+                            <div class="vital-label">BPM Atual</div>
+                        </div>
+                        <div class="vital-item">
+                            <div class="vital-value" id="tendencia-bpm">-</div>
+                            <div class="vital-label">Tendência</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sidebar comunicacao -->
+        <div class="communication-card">
+            <div class="card-header">
+                <span>📱</span>
+                <span class="card-title">Ações de Comunicação</span>
+            </div>
+            <div class="card-content">
+                <div class="action-buttons">
+                    <button class="action-btn notification" onclick="sendNotification()">
+                        <span class="action-icon">🔔</span>
+                        <div class="action-details">
+                            <div class="action-title">Enviar Notificação</div>
+                            <div class="action-desc">Enviar alerta personalizado</div>
+                        </div>
+                    </button>
+
+                    <a href="#" class="action-btn call" id="btn-ligar-paciente">
+                        <span class="action-icon">📞</span>
+                        <div class="action-details">
+                            <div class="action-title">Ligar para Paciente</div>
+                            <div class="action-desc" id="telefone-paciente">-</div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="action-btn whatsapp" id="btn-whatsapp-paciente">
+                        <span class="action-icon">💬</span>
+                        <div class="action-details">
+                            <div class="action-title">WhatsApp</div>
+                            <div class="action-desc">Mensagem rápida</div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- Status paciente-->
+            <div id="status-summary"
+                style="margin-top: 2rem; padding: 1.5rem; background: #fee2e2; border-radius: 10px; display: none;">
+                <h3 style="color: #dc2626; margin-bottom: 1rem;">⚠️ Status Crítico</h3>
+                <ul id="lista-status-critico" style="color: #dc2626; font-size: 0.9rem; line-height: 1.5;">
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Notificacoes -->
+    <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
+    <div class="notification-popup" id="notificationPopup">
+        <div class="popup-header">
+            <h3>📱 Enviar Notificação</h3>
+            <button class="popup-close" onclick="closePopup()">×</button>
+        </div>
+        <div class="popup-form">
+            <label>Mensagem:</label>
+            <textarea class="popup-textarea" placeholder="Digite sua mensagem para o paciente..."
+                id="notificationMessage"></textarea>
+            <div style="display: flex; gap: 1rem;">
+                <label><input type="checkbox"> Email</label>
+            </div>
+            <div class="popup-buttons">
+                <button class="popup-btn secondary" onclick="closePopup()">Cancelar</button>
+                <button class="popup-btn primary" onclick="confirmSendNotification()">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- tela de carregamento  -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Salvando alterações...</div>
+    </div>
+
+    <script src="../public/js/detalhe.js"></script>
+</body>
+
+</html>

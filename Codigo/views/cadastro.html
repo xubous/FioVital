@@ -1,0 +1,69 @@
+<!-- Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel  -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seleção de Perfil - Fio Vital</title>
+  <link rel="stylesheet" href="../public/css/cadastro.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="shortcut icon" href="../public/images/Logo_minimalista.png" type="image/x-icon">
+
+</head>
+<body>
+  <div class="container-login">
+    
+    <!-- Painel esquerdo -->
+    <div class="painel-esquerdo">
+      <div class="logo-container">
+        <i class="fas fa-heartbeat logo-icon"></i>
+        <h1>Fio Vital</h1>
+      </div>
+      <h2>Monitoramento Cardíaco Inteligente</h2>
+      <p>Escolha seu perfil e comece a monitorar sua saúde cardíaca de forma inteligente e contínua.</p>
+
+      <ul class="lista-recursos">
+        <li><i class="fas fa-brain"></i> Monitoramento 24 horas com IA avançada</li>
+        <li><i class="fas fa-bell"></i> Alertas instantâneos para emergências</li>
+        <li><i class="fas fa-chart-bar"></i> Dashboard completo para profissionais</li>
+        <li><i class="fas fa-shield-alt"></i> Segurança e privacidade garantidas</li>
+        <li><i class="fas fa-chart-line"></i> Análise preditiva de saúde</li>
+      </ul>
+    </div>
+
+    <!-- Painel direito -->
+    <div class="painel-direito">
+      <h2>Comece agora!</h2>
+      <p>Selecione o tipo de perfil que melhor se adequa a você</p>
+
+      <div class="seletor-perfil">
+        <div class="perfil" id="paciente" onclick="selecionarPerfil('paciente')">
+          <div class="icone-perfil">👤</div>
+          <strong>Paciente</strong>
+          <div class="descricao-perfil">Para quem quer monitorar sua própria saúde cardíaca e receber acompanhamento</div>
+        </div>
+        <div class="perfil" id="medico" onclick="selecionarPerfil('medico')">
+          <div class="icone-perfil">👤</div>
+          <strong>Cuidador</strong>
+          <div class="descricao-perfil">Para profissionais que acompanham pacientes e necessitam de ferramentas de monitoramento</div>
+        </div>
+      </div>
+
+      <button id="botao-continuar" class="botao" disabled onclick="continuarParaCadastro()">
+        Continuar para Cadastro
+      </button>
+
+      <div class="link-cadastro">
+        <p class="login">Já tem uma conta? <a href="login.html">Faça login</a></p>
+      </div>
+
+      <p class="seguranca">
+        <i class="fas fa-lock"></i> Seus dados são protegidos com criptografia de ponta a ponta
+      </p>
+    </div>
+  </div>
+
+  <script src="../public/js/cadastro.js"></script>
+</body>
+</html>

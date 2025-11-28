@@ -1,0 +1,197 @@
+<!-- Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel  -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fio Vital - Monitoramento Cardíaco Inteligente</title>
+    <link rel="stylesheet" href="../public/css/inicial.css">
+    <link rel="shortcut icon" href="../public/images/Logo_minimalista.png" type="image/x-icon">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <img class="imagem_logo" src="../public/images/logo_image.png" alt="imagem_logo">
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#recursos">Recursos</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+            <a href="cadastro.html" class="cta-button">Começar Agora</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Monitoramento Cardíaco Inteligente</h1>
+                <p>Cuide do seu coração com tecnologia avançada. O Fio Vital oferece monitoramento contínuo dos batimentos cardíacos com alertas inteligentes em tempo real.</p>
+                <div class="hero-buttons">
+                    <a href="cadastro.html" class="cta-button">Experimente Gratis</a>
+                    <button class="btn-secondary">Saiba Mais</button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">24h</span>
+                        <span class="stat-label">Monitoramento</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">99%</span>
+                        <span class="stat-label">Precisão</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5s</span>
+                        <span class="stat-label">Alerta Rápido</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pulse-monitor">
+                <svg class="heartbeat" width="400" height="200" viewBox="0 0 400 200">
+                    <path class="heartbeat-line" 
+                    d="M0,100 L80,100 L90,60 L100,140 L110,40 L120,160 L130,100 L400,100" />
+                </svg>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="recursos">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Por que escolher o Fio Vital?</h2>
+                <p class="section-subtitle">Nossa plataforma oferece o que há de mais avançado em monitoramento cardíaco digital</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                            <circle cx="30" cy="30" r="25" fill="#FF6B6B" opacity="0.1"/>
+                            <path d="M20 30h8l3-8 6 16 3-8h8" stroke="#FF6B6B" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Inteligência Artificial</h3>
+                    <p class="feature-description">Algoritmos avançados de IA detectam padrões anômalos e previnem riscos futuros, garantindo cuidados preventivos personalizados</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                            <circle cx="30" cy="30" r="25" fill="#FFD93D" opacity="0.1"/>
+                            <path d="M30 15l3 9h9l-7 5 3 9-8-6-8 6 3-9-7-5h9z" fill="#FFD93D"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Alertas Instantâneos</h3>
+                    <p class="feature-description">Sistema de notificação automática para médicos e cuidadores em caso de irregularidades cardíacas críticas</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                            <circle cx="30" cy="30" r="25" fill="#4ECDC4" opacity="0.1"/>
+                            <rect x="20" y="20" width="20" height="15" rx="2" fill="#4ECDC4"/>
+                            <path d="M25 40v5M35 40v5M20 45h20" stroke="#4ECDC4" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Dashboard Intuitivo</h3>
+                    <p class="feature-description">Interface amigável com gráficos em tempo real e análises preditivas para acompanhamento completo da saúde cardíaca</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                            <circle cx="30" cy="30" r="25" fill="#45B7D1" opacity="0.1"/>
+                            <path d="M30 15v30M15 30h30" stroke="#45B7D1" stroke-width="2"/>
+                            <circle cx="30" cy="30" r="8" fill="#45B7D1"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Segurança Total</h3>
+                    <p class="feature-description">Seus dados médicos são protegidos com criptografia de ponta e conformidade total com as normas de privacidade</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                            <circle cx="30" cy="30" r="25" fill="#96CEB4" opacity="0.1"/>
+                            <path d="M20 25h20v20H20z" fill="#96CEB4" opacity="0.3"/>
+                            <circle cx="25" cy="30" r="3" fill="#96CEB4"/>
+                            <circle cx="35" cy="30" r="3" fill="#96CEB4"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Equipe Conectada</h3>
+                    <p class="feature-description">Facilita a comunicação entre pacientes, familiares e profissionais de saúde em uma plataforma unificada</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                            <circle cx="30" cy="30" r="25" fill="#FFEAA7" opacity="0.1"/>
+                            <path d="M30 20v20M20 30h20" stroke="#FFEAA7" stroke-width="2"/>
+                            <circle cx="30" cy="30" r="5" fill="#FFEAA7"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title">Análise Preditiva</h3>
+                    <p class="feature-description">Identifica tendências e riscos futuros de saúde baseado no histórico do paciente e padrões comportamentais</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Comece a Cuidar Melhor da Sua Saúde Hoje</h2>
+                <p>Junte-se a milhares de pacientes e profissionais que já confiam no Fio Vital para um monitoramento cardíaco inteligente e seguro.</p>
+                <a href="cadastro.html" class="cta-button">Começar Agora</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contato">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Fio Vital</h3>
+                    <p>Revolucionando o monitoramento de saúde digital com tecnologia de ponta e inteligência artificial.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Produtos</h3>
+                    <ul>
+                        <li><a href="#">Monitoramento Pessoal</a></li>
+                        <li><a href="#">Soluções Hospitalares</a></li>
+                        <li><a href="#">API para Desenvolvedores</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">Documentação</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Empresa</h3>
+                    <ul>
+                        <li><a href="#">Sobre Nós</a></li>
+                        <li><a href="#">Carreiras</a></li>
+                        <li><a href="#">Privacidade</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Fio Vital. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../public/js/inicial.js"></script>
+</body>
+</html>
