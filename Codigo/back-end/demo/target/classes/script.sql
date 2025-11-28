@@ -26,13 +26,12 @@ CREATE TABLE batimento (
 );
 
 
-CREATE TABLE alerta (
+CREATE TABLE IF NOT EXISTS notificacoes (
     id SERIAL PRIMARY KEY,
-    paciente_id TEXT NOT NULL,
-    cuidador_id TEXT NOT NULL,
-    bpm TEXT NOT NULL,
-    tipo TEXT NOT NULL,
-    mensagem TEXT,             
-    lido TEXT NOT NULL,
-    criado_em TEXT NOT NULL
+    paciente_email VARCHAR(255) NOT NULL,
+    cuidador_email VARCHAR(255) NOT NULL,
+    mensagem TEXT NOT NULL,
+    data_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    tipo VARCHAR(50) DEFAULT 'push',
+    lida BOOLEAN DEFAULT FALSE
 );

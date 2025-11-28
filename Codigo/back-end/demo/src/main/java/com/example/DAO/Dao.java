@@ -12,11 +12,13 @@ import java.util.List;
 import com.example.CUIDADOR.Cuidador;
 import com.example.NOTIFICACAO.Notificacao;
 import com.example.PACIENTE.Paciente;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class Dao {
-    private static String user = "postgres";
-    private static String password = "2305";
-    private static String url = "jdbc:postgresql://localhost:5432/pessoas";
+    private static final Dotenv dotenv = Dotenv.load();
+    private static final String user = dotenv.get("DB_USER");
+    private static final String password = dotenv.get("DB_PASSWORD");
+    private static final String url = dotenv.get("DB_URL");
 
     public Connection connect() throws SQLException {
         return DriverManager.getConnection(url, user, password);
