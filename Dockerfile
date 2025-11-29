@@ -1,6 +1,6 @@
 FROM maven:3.9.5-eclipse-temurin-21 AS build
 WORKDIR /app/backend
-COPY Codigo/back-end/demo
+COPY Codigo/back-end
 RUN mvn clean install
 FROM eclipse-temurin:21-jre-alpine
 EXPOSE 4567
