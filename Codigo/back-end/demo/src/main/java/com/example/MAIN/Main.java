@@ -29,6 +29,7 @@ import javax.imageio.ImageIO;
 public class Main {
 
     private static final Dotenv dotenv = Dotenv.configure()
+                                                .filename(".env" )
                                                .ignoreIfMissing() // evita crash se não achar (opcional)
                                                .load();           // carrega do classpath
 
