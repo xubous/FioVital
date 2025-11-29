@@ -2,7 +2,7 @@
 
 // Funcao para voltar a pagina inicial (Chamada pelo botao "Voltar para a Página Inicial")
 function voltarParaInicio() {
-    window.location.href = '../views/index.html';
+    window.location.href = './index.html';
 }
 
 // Login de paciente ou cuidador
