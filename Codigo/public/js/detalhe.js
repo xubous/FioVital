@@ -1,9 +1,7 @@
 // Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel 
 
-// detalhe.js
-// URL base da API
+// detalhe.js - VERSAO COM SIMULACAO (sem dependencia do Arduino)
 const API_URL = 'http://localhost:4567';
-const ESP_IP = "http://192.168.3.51";
 const CUSTOM_VISION_API = 'http://localhost:4567/analisar-bpm';
 
 // Historico local de BPM
@@ -23,9 +21,24 @@ let editMode = false;
 let pacienteId = null;
 let currentBPM = 72;
 
+// FUNCAO DE SIMULACAO DE BPM
+function simularBPM() {
+  const chance = Math.random();
+  
+  if (chance < 0.80) {
+    // 80% chance: BPM normal (60-100)
+    return 60 + Math.floor(Math.random() * 41);
+  } else if (chance < 0.95) {
+    // 15% chance: BPM elevado (100-140)
+    return 100 + Math.floor(Math.random() * 41);
+  } else {
+    // 5% chance: BPM baixo (40-60)
+    return 40 + Math.floor(Math.random() * 21);
+  }
+}
+
 // Notificacoes
 
-// inicializa as notificacoes
 function inicializarNotificacoes() {
     if (!notificationContainer) {
         notificationContainer = document.createElement('div');
@@ -44,7 +57,6 @@ function inicializarNotificacoes() {
     }
 }
 
-// mostrar Notificacao
 function mostrarNotificacao(tipo, titulo, mensagem) {
     inicializarNotificacoes();
 
@@ -71,13 +83,11 @@ function mostrarNotificacao(tipo, titulo, mensagem) {
     }, 5000);
 }
 
-// Funcao para obter sessao do cuidador
 function obterSessao() {
     const c = localStorage.getItem("cuidador");
     return c ? JSON.parse(c) : null;
 }
 
-// Funcao para carregar dados do cuidador
 function carregarDadosCuidador() {
     try {
         const sessao = obterSessao();
@@ -100,7 +110,6 @@ function carregarDadosCuidador() {
     }
 }
 
-// Funcao para obter o paciente do localStorage
 function getPacienteFromStorage() {
     const pacienteStorage = localStorage.getItem('pacienteSelecionado');
     if (pacienteStorage) {
@@ -109,7 +118,6 @@ function getPacienteFromStorage() {
     return null;
 }
 
-// Funcao para calcular idade
 function calcularIdade(dataNascimento) {
     if (!dataNascimento) return '-';
     
@@ -126,7 +134,6 @@ function calcularIdade(dataNascimento) {
     return idade + ' anos';
 }
 
-// Funcao para formatar telefone
 function formatarTelefone(telefone) {
     if (!telefone) return '-';
     const numeros = telefone.replace(/\D/g, '');
@@ -138,13 +145,11 @@ function formatarTelefone(telefone) {
     return telefone;
 }
 
-// Funcao para formatar data
 function formatarDataParaInput(data) {
     if (!data) return '';
     return data.split('T')[0];
 }
 
-// Funcao principal para carregar dados do paciente
 async function carregarDadosPaciente() {
     try {
         console.log('Iniciando carregamento de dados do paciente');
@@ -235,7 +240,6 @@ async function carregarDadosPaciente() {
 
 // CUSTOM VISION
 
-// Analise com Custom Vision
 async function analisarComIA() {
     if (historicoBPM.length < 7) {
         console.log("Aguardando coletar 7 leituras para analise IA");
@@ -266,14 +270,11 @@ async function analisarComIA() {
 
             console.log(`Previsao IA: ${previsao} (${probabilidade}%)`);
 
-            // Atualizar status baseado na previsao
             statusAtualIA = interpretarPrevisao(previsao, probabilidade);
             atualizarStatusIA();
 
-            // Atualizar status visual no card
             atualizarStatusVisualIA(previsao, probabilidade);
 
-            // Notificar se detectar anomalia
             if (previsao.toLowerCase().includes('anormal') || 
                 previsao.toLowerCase().includes('bradicardia') || 
                 previsao.toLowerCase().includes('taquicardia')) {
@@ -298,7 +299,6 @@ async function analisarComIA() {
     }
 }
 
-// Interpretar a previsao do Custom Vision
 function interpretarPrevisao(previsao, probabilidade) {
     const prev = previsao.toLowerCase();
     
@@ -315,13 +315,11 @@ function interpretarPrevisao(previsao, probabilidade) {
     }
 }
 
-// Atualizar display do status IA
 function atualizarStatusIA() {
     const statusIAElement = document.getElementById("status-ia-text");
     if (statusIAElement) {
         statusIAElement.textContent = statusAtualIA;
         
-        // Colorir baseado no status
         if (statusAtualIA.includes('Normal')) {
             statusIAElement.style.color = "#10b981";
         } else if (statusAtualIA.includes('Bradicardia') || statusAtualIA.includes('Taquicardia')) {
@@ -334,7 +332,6 @@ function atualizarStatusIA() {
     }
 }
 
-// Atualizar status visual no card de monitoramento
 function atualizarStatusVisualIA(previsao, probabilidade) {
     const statusTextElement = document.getElementById("status-text");
     const nivelRiscoElement = document.getElementById("nivel-risco");
@@ -363,12 +360,11 @@ function atualizarStatusVisualIA(previsao, probabilidade) {
 
 // Funcoes de Simulacao Cardiaca 
 function inicializarSimulacaoCardiaca() {
-    console.log("Iniciando monitoramento cardiaco com IA");
-    atualizarBPM_ESP(); 
+    console.log("Iniciando monitoramento cardiaco com IA (MODO SIMULACAO)");
+    atualizarBPM_Simulado(); 
     drawChart();
-    bpmUpdateInterval = setInterval(atualizarBPM_ESP, 2000);
+    bpmUpdateInterval = setInterval(atualizarBPM_Simulado, 2000);
     
-    // Analisar com IA a cada 14 segundos (7 leituras * 2s)
     setInterval(analisarComIA, 14000);
     
     window.addEventListener("resize", () => {
@@ -376,13 +372,13 @@ function inicializarSimulacaoCardiaca() {
     });
 }
 
-// Funcao principal que consulta o ESP32
-async function atualizarBPM_ESP() {
+// Funcao que simula o ESP32
+async function atualizarBPM_Simulado() {
     try {
-        const resposta = await fetch(`${ESP_IP}/dados`);
-        const dados = await resposta.json();
+        // SIMULACAO: Gerar BPM aleatorio
+        const bpmGerado = simularBPM();
 
-        historicoBPM.push(dados.bpm);
+        historicoBPM.push(bpmGerado);
 
         if (historicoBPM.length > 10) historicoBPM.shift();
 
@@ -391,7 +387,6 @@ async function atualizarBPM_ESP() {
 
         document.getElementById("bpm-atual").textContent = media;
 
-        // Determina status basico
         let statusAnormal = false;
         let tendencia = "Estavel";
         let nivelRisco = "Baixo";
@@ -403,18 +398,16 @@ async function atualizarBPM_ESP() {
             nivelRisco = "Alto";
             statusText = "Batimento Elevado";
 
-            // Notificacao apenas na mudanca de estado
             if (!ultimoStatusAnormal) {
                 let mensagem = `ALERTA: Paciente ${pacienteData?.nome || 'N/A'} com batimento alto BPM: ${media}. Verificacao necessaria`;
                 
-                // Adicionar informacao da IA se disponivel
                 if (ultimaPrevisaoIA) {
                     mensagem += ` (IA: ${ultimaPrevisaoIA.previsao} - ${ultimaPrevisaoIA.probabilidadePercentual.toFixed(1)}%)`;
                 }
                 
                 mostrarNotificacao('warning', 'Batimento Elevado', mensagem);
             }
-        } else if (media > 100) {
+        } else if (media > 90) {
             tendencia = "Elevado";
             nivelRisco = "Moderado";
             statusText = "BPM Elevado";
@@ -424,11 +417,9 @@ async function atualizarBPM_ESP() {
             nivelRisco = "Alto";
             statusText = "Batimento abaixo do normal";
 
-            // Notificacao apenas na mudanca de estado
             if (!ultimoStatusAnormal) {
                 let mensagem = `ALERTA: Paciente ${pacienteData?.nome || 'N/A'} com batimento baixo BPM: ${media}. Verificacao necessaria`;
                 
-                // Adicionar informacao da IA se disponivel
                 if (ultimaPrevisaoIA) {
                     mensagem += ` (IA: ${ultimaPrevisaoIA.previsao} - ${ultimaPrevisaoIA.probabilidadePercentual.toFixed(1)}%)`;
                 }
@@ -441,11 +432,9 @@ async function atualizarBPM_ESP() {
             statusText = "BPM Baixo";
         }
 
-        // Notificacao quando normaliza
         if (!statusAnormal && ultimoStatusAnormal) {
             let mensagem = `Paciente ${pacienteData?.nome || 'N/A'} voltou ao normal: ${media} BPM. Continue o monitoramento.`;
             
-            // Adicionar informacao da IA se disponivel
             if (ultimaPrevisaoIA && ultimaPrevisaoIA.previsao.toLowerCase().includes('normal')) {
                 mensagem += ` (IA confirma: ${ultimaPrevisaoIA.probabilidadePercentual.toFixed(1)}%)`;
             }
@@ -455,7 +444,6 @@ async function atualizarBPM_ESP() {
 
         ultimoStatusAnormal = statusAnormal;
 
-        // So atualiza se a IA nao tiver sobrescrito
         if (!ultimaPrevisaoIA || historicoBPM.length < 7) {
             document.getElementById("tendencia-bpm").textContent = tendencia;
             document.getElementById("nivel-risco").textContent = nivelRisco;
@@ -475,17 +463,15 @@ async function atualizarBPM_ESP() {
         drawChart();
         verificarAlertasBPM(media);
 
-        // Analise com IA quando tivermos 7 leituras
         if (historicoBPM.length === 7) {
             await analisarComIA();
         }
 
     } catch (e) {
-        console.warn("Falha ao obter BPM do ESP:", e);
+        console.warn("Erro na simulacao de BPM:", e);
     }
 }
 
-// Funcao de alerta baseada na media
 function verificarAlertasBPM(media) {
     const statusSummary = document.getElementById('status-summary');
     const listaStatusCritico = document.getElementById('lista-status-critico');
@@ -500,7 +486,6 @@ function verificarAlertasBPM(media) {
     }
 }
 
-// Construir o grafico
 function drawChart() {
     const canvas = document.getElementById('heartRateChart');
     if (!canvas) return;
@@ -567,7 +552,6 @@ function drawChart() {
     });
 }
 
-// Funcao para carregar dados de exemplo
 function carregarDadosExemplo() {
     pacienteData = {
         id: 1,
@@ -615,7 +599,6 @@ async function confirmSendNotification() {
         return;
     }
 
-    // Verificar se ha paciente e cuidador
     if (!pacienteData || !pacienteData.email) {
         alert('Erro');
         return;
@@ -627,18 +610,15 @@ async function confirmSendNotification() {
         return;
     }
 
-    // Obter tipos de notificacao selecionados
     const checkboxes = document.querySelectorAll('.popup-form input[type="checkbox"]:checked');
     const tipos = Array.from(checkboxes).map(cb => cb.parentElement.textContent.trim()).join(', ');
 
     try {
-        // Mostrar loading
         const loadingOverlay = document.getElementById('loadingOverlay');
         if (loadingOverlay) {
             loadingOverlay.style.display = 'flex';
         }
 
-        // Enviar para o backend
         const response = await fetch(`${API_URL}/notificacao/enviar`, {
             method: 'POST',
             headers: {
@@ -654,19 +634,15 @@ async function confirmSendNotification() {
 
         const resultado = await response.json();
 
-        // Esconder loading
         if (loadingOverlay) {
             loadingOverlay.style.display = 'none';
         }
 
         if (response.ok && resultado.status === 'ok') {
-            // Fechar popup
             closePopup();
             
-            // Limpar textarea
             document.getElementById('notificationMessage').value = '';
             
-            // Mostrar notificacao de sucesso
             mostrarNotificacao(
                 'success',
                 'Notificacao Enviada',
@@ -681,7 +657,6 @@ async function confirmSendNotification() {
     } catch (error) {
         console.error('Erro ao enviar notificacao:', error);
         
-        // Esconder loading
         const loadingOverlay = document.getElementById('loadingOverlay');
         if (loadingOverlay) {
             loadingOverlay.style.display = 'none';
@@ -716,14 +691,12 @@ function shareData() {
     alert('Funcionalidade de compartilhamento em desenvolvimento');
 }
 
-// Inicializacao quando a pagina carregar
 window.addEventListener('DOMContentLoaded', () => {
     inicializarNotificacoes();
     carregarDadosCuidador();
     carregarDadosPaciente();
 });
 
-// Limpar intervalo quando a pagina for fechada
 window.addEventListener('beforeunload', () => {
     if (bpmUpdateInterval) {
         clearInterval(bpmUpdateInterval);

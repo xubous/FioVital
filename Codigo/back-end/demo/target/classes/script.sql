@@ -25,7 +25,6 @@ CREATE TABLE batimento (
     hora TEXT
 );
 
-
 CREATE TABLE IF NOT EXISTS notificacoes (
     id SERIAL PRIMARY KEY,
     paciente_email VARCHAR(255) NOT NULL,

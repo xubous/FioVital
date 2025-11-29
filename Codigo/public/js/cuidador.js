@@ -1,6 +1,6 @@
 // Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel 
 
-// cuidador.js
+// cuidador.js - VERSAO COM SIMULACAO (sem dependencia do Arduino)
 const API_BASE = 'http://localhost:4567';
 let pacientesEncontrados = [];
 
@@ -130,7 +130,6 @@ let pacienteSelecionadoMapa = null;
       return;
     }
 
-    // Criar grupo com todos os marcadores
     const grupo = L.featureGroup(marcadores.map(m => m.marcador));
     mapa.fitBounds(grupo.getBounds().pad(0.1));
   }
@@ -175,7 +174,6 @@ let pacienteSelecionadoMapa = null;
       const paciente = data.paciente || data;
       if (!paciente) throw new Error("Paciente nao encontrado");
 
-      // Comparar pelo e-mail
       const jaExiste = pacientesEncontrados.some(p => p.email === paciente.email);
       if (jaExiste) {
         alert("Paciente ja esta na sua lista");
@@ -186,7 +184,6 @@ let pacienteSelecionadoMapa = null;
       salvarPacientesNoLocalStorage();
       atualizarListaPacientes();
 
-      // Atualizar mapa
       await atualizarLocalizacaoPaciente(paciente);
 
       alert(`Paciente ${paciente.nome} adicionado com sucesso`);
@@ -209,16 +206,12 @@ let pacienteSelecionadoMapa = null;
     if (confirm(`Tem certeza que deseja remover ${paciente.nome} da sua lista`)) {
       pacientesEncontrados = pacientesEncontrados.filter(p => p.id !== pacienteId);
       
-      // Remover do localStorage
       salvarPacientesNoLocalStorage();
       
-      // Remover marcador do mapa
       removerMarcador(pacienteId);
       
-      // Atualizar lista
       atualizarListaPacientes();
       
-      // Limpar detalhes se o paciente removido era o selecionado
       if (pacienteSelecionadoMapa === pacienteId) {
         limparDetalhesPaciente();
       }
@@ -278,7 +271,7 @@ let pacienteSelecionadoMapa = null;
     });
   }
 
-  //  Selecionar paciente 
+  //  Selecionar paciente e simular dados
   async function selecionarPaciente(paciente) {
     console.log("Paciente selecionado:", paciente);
     
@@ -290,13 +283,77 @@ let pacienteSelecionadoMapa = null;
     
     document.getElementById('gc-endereco-paciente').textContent = paciente.endereco || 'Endereco nao informado';
     
-    document.getElementById('gc-bpm-atual').textContent = paciente.bpm || '84 BPM';
-    document.getElementById('gc-ultima-medicao').textContent = paciente.ultimaMedicao || '84,39 segundos';
-    document.getElementById('gc-tendencia').textContent = paciente.tendencia || 'Estavel';
+    // SIMULACAO: Gerar BPM aleatorio realista
+    const bpmSimulado = simularBPM();
+    document.getElementById('gc-bpm-atual').textContent = `${bpmSimulado} BPM`;
+    
+    // SIMULACAO: Horario atual
+    const agora = new Date();
+    const horaFormatada = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    document.getElementById('gc-ultima-medicao').textContent = horaFormatada;
+    
+    // SIMULACAO: Tendencia baseada no BPM
+    let tendencia = 'Estavel';
+    if (bpmSimulado > 100) tendencia = 'Elevado';
+    if (bpmSimulado < 60) tendencia = 'Baixo';
+    document.getElementById('gc-tendencia').textContent = tendencia;
     
     await atualizarLocalizacaoPaciente(paciente);
     
     localStorage.setItem('pacienteSelecionado', JSON.stringify(paciente));
+    
+    // Atualizar a cada 3 segundos
+    iniciarAtualizacaoSimulada(paciente);
+  }
+
+  // FUNCAO DE SIMULACAO DE BPM
+  function simularBPM() {
+    const chance = Math.random();
+    
+    if (chance < 0.80) {
+      // 80% chance: BPM normal (60-100)
+      return 60 + Math.floor(Math.random() * 41);
+    } else if (chance < 0.95) {
+      // 15% chance: BPM elevado (100-140)
+      return 100 + Math.floor(Math.random() * 41);
+    } else {
+      // 5% chance: BPM baixo (40-60)
+      return 40 + Math.floor(Math.random() * 21);
+    }
+  }
+
+  // Intervalo para atualizar dados simulados
+  let intervaloAtualizacao = null;
+
+  function iniciarAtualizacaoSimulada(paciente) {
+    // Limpar intervalo anterior se existir
+    if (intervaloAtualizacao) {
+      clearInterval(intervaloAtualizacao);
+    }
+
+    // Atualizar a cada 3 segundos
+    intervaloAtualizacao = setInterval(() => {
+      const bpmAtual = simularBPM();
+      const elementoBpm = document.getElementById('gc-bpm-atual');
+      if (elementoBpm) {
+        elementoBpm.textContent = `${bpmAtual} BPM`;
+      }
+
+      const agora = new Date();
+      const horaFormatada = agora.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      const elementoHora = document.getElementById('gc-ultima-medicao');
+      if (elementoHora) {
+        elementoHora.textContent = horaFormatada;
+      }
+
+      let tendencia = 'Estavel';
+      if (bpmAtual > 100) tendencia = 'Elevado';
+      if (bpmAtual < 60) tendencia = 'Baixo';
+      const elementoTendencia = document.getElementById('gc-tendencia');
+      if (elementoTendencia) {
+        elementoTendencia.textContent = tendencia;
+      }
+    }, 3000);
   }
 
   //  Cadastro 
@@ -398,7 +455,6 @@ let pacienteSelecionadoMapa = null;
       atualizarHeader(sessao);
     }
 
-
     atualizarListaPacientes();
 
     pacientesEncontrados.forEach(paciente => {
@@ -413,6 +469,11 @@ let pacienteSelecionadoMapa = null;
 
   //  Logout 
   function logout() {
+    // Limpar intervalo de atualizacao
+    if (intervaloAtualizacao) {
+      clearInterval(intervaloAtualizacao);
+    }
+    
     const pacientesSalvos = localStorage.getItem('pacientesCuidador');
     
     localStorage.clear();
@@ -425,7 +486,7 @@ let pacienteSelecionadoMapa = null;
   }
 
   window.acionarEmergencia = function() {
-    alert("Acionando emergncia...");
+    alert("Acionando emergencia...");
   };
 
   window.ligarPaciente = function() {
@@ -451,7 +512,6 @@ let pacienteSelecionadoMapa = null;
     alert("Mapa atualizado com as ultimas localizacoes");
   };
 
-  // Funcao para limpar todos os pacientes
   window.limparTodosPacientes = function() {
     if (pacientesEncontrados.length === 0) {
       alert("Nao ha pacientes para limpar");
@@ -459,11 +519,15 @@ let pacienteSelecionadoMapa = null;
     }
 
     if (confirm(`Tem certeza que deseja remover todos os ${pacientesEncontrados.length} pacientes`)) {
+      // Limpar intervalo
+      if (intervaloAtualizacao) {
+        clearInterval(intervaloAtualizacao);
+      }
+      
       pacientesEncontrados = [];
       salvarPacientesNoLocalStorage();
       atualizarListaPacientes();
       
-
       marcadores.forEach(m => mapa.removeLayer(m.marcador));
       marcadores = [];
       

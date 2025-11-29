@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
 import com.example.CUIDADOR.Cuidador;
 import com.example.NOTIFICACAO.Notificacao;
 import com.example.PACIENTE.Paciente;
@@ -16,12 +18,32 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 public class Dao {
     private static final Dotenv dotenv = Dotenv.load();
-    private static final String user = dotenv.get("DB_USER");
-    private static final String password = dotenv.get("DB_PASSWORD");
+    private static final String user = dotenv.get("PGUSER");
+    private static final String password = dotenv.get("PGPASSWORD");
     private static final String url = dotenv.get("DB_URL");
 
+
     public Connection connect() throws SQLException {
-        return DriverManager.getConnection(url, user, password);
+        try {
+            // Configurar propriedades de conexão
+            Properties props = new Properties();
+            props.setProperty("user", user);
+            props.setProperty("password", password);
+            props.setProperty("ssl", "true");
+            props.setProperty("sslmode", "require");
+            
+            Connection conn = DriverManager.getConnection(url, props);
+            System.out.println("✅ CONEXÃO ESTABELECIDA COM SUCESSO!");
+            return conn;
+            
+        } catch (SQLException e) {
+            System.err.println("❌ ERRO NA CONEXÃO:");
+            System.err.println("Mensagem: " + e.getMessage());
+            System.err.println("SQLState: " + e.getSQLState());
+            System.err.println("ErrorCode: " + e.getErrorCode());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     public boolean atualizarPaciente(int id, String nome, String email, String telefone,

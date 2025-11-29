@@ -1,9 +1,8 @@
 // Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel 
 
-// Cadastro + Painel do Paciente com Custom Vision
+// Cadastro + Painel do Paciente com Custom Vision - VERSAO COM SIMULACAO (sem dependencia do Arduino)
 (function () {
   const API_BASE = 'http://localhost:4567';
-  const ESP_IP = "http://192.168.3.51";
   const CUSTOM_VISION_API = 'http://localhost:4567/analisar-bpm';
 
   let currentBPM = 0;
@@ -12,6 +11,22 @@
   let notificationContainer = null;
   let ultimaPrevisaoIA = null;
   let statusAtualIA = "Aguardando analise";
+
+  // FUNCAO DE SIMULACAO DE BPM
+  function simularBPM() {
+    const chance = Math.random();
+    
+    if (chance < 0.80) {
+      // 80% chance: BPM normal (60-100)
+      return 60 + Math.floor(Math.random() * 41);
+    } else if (chance < 0.95) {
+      // 15% chance: BPM elevado (100-140)
+      return 100 + Math.floor(Math.random() * 41);
+    } else {
+      // 5% chance: BPM baixo (40-60)
+      return 40 + Math.floor(Math.random() * 21);
+    }
+  }
 
   // notificacoes
   function inicializarNotificacoes() {
@@ -245,13 +260,13 @@
     }
   }
 
-  // monitoramento
+  // monitoramento com SIMULACAO
   async function atualizar() {
     try {
-      const res = await fetch(`${ESP_IP}/dados`);
-      const data = await res.json();
+      // SIMULACAO: Gerar BPM ao inves de buscar do ESP32
+      const bpmGerado = simularBPM();
 
-      historicoBPM.push(data.bpm);
+      historicoBPM.push(bpmGerado);
 
       if (historicoBPM.length > 7) {
         historicoBPM.shift();
@@ -336,7 +351,9 @@
         ultimoStatusAnormal = false;
       }
 
-    } catch (err) {}
+    } catch (err) {
+      console.error("Erro na simulacao:", err);
+    }
   }
 
   // carregar notificacoes
@@ -425,6 +442,7 @@
 
   // inicializar monitoramento
   function inicializarMonitoramentoCardiaco() {
+    console.log("Iniciando monitoramento cardiaco (MODO SIMULACAO)");
     inicializarNotificacoes();
     atualizar();
     setInterval(atualizar, 2000);
