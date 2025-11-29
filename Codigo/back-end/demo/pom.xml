@@ -50,7 +50,6 @@
 
     <build>
         <plugins>
-
             <!-- Plugin para empacotar o JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -90,8 +89,17 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
+
+            <resources>
+                <resource>
+                    <directory>src/main/resources</directory>
+                    <includes>
+                        <include>.env</include>
+                        <include>*/</include>
+                    </includes>
+                </resource>
+            </resources>
     </build>
 
 </project>
