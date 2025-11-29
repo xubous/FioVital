@@ -32,7 +32,7 @@ WORKDIR /app
 # *** PONTO DE CORREÇÃO CRÍTICO ***
 # Copia o JAR compilado. O caminho de origem deve incluir a pasta 'demo'
 # Substitua 'FioVital-1.0.jar' pelo nome exato do arquivo JAR gerado pelo seu Maven.
-COPY --from=build /app/Codigo/back-end/demo/target/FioVital-1.0.jar app.jar
+COPY --from=build /app/Codigo/back-end/demo/target/meu-projeto-1.0-SNAPSHOT.jar app.jar
 
 # Comando principal de execução
 ENTRYPOINT ["java", "-jar", "app.jar"]
