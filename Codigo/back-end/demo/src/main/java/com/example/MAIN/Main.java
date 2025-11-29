@@ -28,13 +28,15 @@ import javax.imageio.ImageIO;
 
 public class Main {
 
-    private static final Dotenv dotenv = Dotenv.load();
+    private static final Dotenv dotenv = Dotenv.configure()
+                                               .ignoreIfMissing() // evita crash se não achar (opcional)
+                                               .load();           // carrega do classpath
 
-    // Configuracoes do Custom Vision
-    private static final String ENDPOINT = dotenv.get("ENDPOINT");
-    private static final String PROJECT_ID = dotenv.get("PROJECT_ID");
-    private static final String PUBLISHED_NAME = dotenv.get("PUBLISHED_NAME");
-    private static final String PREDICTION_KEY = dotenv.get("PREDICTION_KEY");
+    // Configurações do Custom Vision
+    public static final String ENDPOINT = dotenv.get("ENDPOINT");
+    public static final String PROJECT_ID = dotenv.get("PROJECT_ID");
+    public static final String PUBLISHED_NAME = dotenv.get("PUBLISHED_NAME");
+    public static final String PREDICTION_KEY = dotenv.get("PREDICTION_KEY");
 
     public static void main(String[] args) {
 

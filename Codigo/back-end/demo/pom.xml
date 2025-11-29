@@ -91,15 +91,6 @@
             </plugin>
         </plugins>
 
-            <resources>
-                <resource>
-                    <directory>src/main/resources</directory>
-                    <includes>
-                        <include>.env</include>
-                        <include>*/</include>
-                    </includes>
-                </resource>
-            </resources>
     </build>
 
 </project>
