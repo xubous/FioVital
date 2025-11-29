@@ -2,8 +2,8 @@
 
 // Cadastro + Painel do Paciente com Custom Vision - VERSAO COM SIMULACAO (sem dependencia do Arduino)
 (function () {
-  const API_BASE = 'http://localhost:4567';
-  const CUSTOM_VISION_API = 'http://localhost:4567/analisar-bpm';
+  const API_BASE = 'https://fiovital-1.onrender.com';
+  const CUSTOM_VISION_API = 'https://fiovital-1.onrender.com/analisar-bpm';
 
   let currentBPM = 0;
   let historicoBPM = [];
@@ -79,7 +79,7 @@
 
   function handleFatal(msg) {
     alert("Sessao expirada ou erro: " + msg);
-    window.location.href = "../views/login.html";
+    window.location.href = "/login.html";
   }
 
   // cadastro do paciente
@@ -128,7 +128,7 @@
         salvarSessao({ ...paciente, id });
 
         alert("Cadastro realizado com sucesso");
-        window.location.href = "../views/paciente.html";
+        window.location.href = "/paciente.html";
 
       } catch (err) {
         alert("Erro: " + err.message);
@@ -173,7 +173,7 @@
     localStorage.removeItem("paciente");
     localStorage.removeItem("pacienteId");
     localStorage.removeItem("pacienteEmail");
-    window.location.href = "../views/login.html";
+    window.location.href = "/login.html";
   }
 
   // Analise com Custom Vision

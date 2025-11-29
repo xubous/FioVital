@@ -1,7 +1,7 @@
 // Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel 
 
 // cuidador.js - VERSAO COM SIMULACAO (sem dependencia do Arduino)
-const API_BASE = 'http://localhost:4567';
+const API_BASE = 'https://fiovital-1.onrender.com';
 let pacientesEncontrados = [];
 
 // Variaveis globais para o mapa
@@ -138,7 +138,7 @@ let pacienteSelecionadoMapa = null;
   function handleFatal(msg) {
     console.error(msg);
     alert("Sessao expirada ou erro: " + msg);
-    window.location.href = "../views/login.html";
+    window.location.href = "/login.html";
   }
 
   //  Sessao 
@@ -399,7 +399,7 @@ let pacienteSelecionadoMapa = null;
 
         salvarSessao({ ...cuidador, id });
         alert("Cadastro realizado com sucesso");
-        window.location.href = "../views/cuidador.html";
+        window.location.href = "/cuidador.html";
 
       } catch (err) {
         console.error("Erro ao cadastrar cuidador:", err);
@@ -482,7 +482,7 @@ let pacienteSelecionadoMapa = null;
       localStorage.setItem('pacientesCuidador', pacientesSalvos);
     }
     
-    window.location.href = "../views/login.html";
+    window.location.href = "/login.html";
   }
 
   window.acionarEmergencia = function() {

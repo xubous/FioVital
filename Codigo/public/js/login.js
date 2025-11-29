@@ -2,12 +2,12 @@
 
 // Funcao para voltar a pagina inicial (Chamada pelo botao "Voltar para a Página Inicial")
 function voltarParaInicio() {
-    window.location.href = './index.html';
+    window.location.href = '/index.html';
 }
 
 // Login de paciente ou cuidador
 (function() {
- const API_BASE = 'http://localhost:4567';
+ const API_BASE = 'https://fiovital-1.onrender.com';
 
  // Verificacao automatica de sessao 
  document.addEventListener('DOMContentLoaded', () => {
@@ -16,13 +16,13 @@ function voltarParaInicio() {
 
   if (cuidador) {
    console.log("Sessao de cuidador detectada. Redirecionando");
-   window.location.href = "../views/cuidador.html";
+   window.location.href = "/cuidador.html";
    return;
   }
 
   if (paciente) {
    console.log("Sessao de paciente detectada. Redirecionando");
-   window.location.href = "../views/paciente.html";
+   window.location.href = "/paciente.html";
    return;
   }
  });
@@ -57,7 +57,7 @@ function voltarParaInicio() {
       localStorage.setItem("cuidador", JSON.stringify(usuario));
       localStorage.setItem("cuidadorId", usuario.id);
       localStorage.setItem("cuidadorEmail", usuario.email);
-      window.location.href = "../views/cuidador.html";
+      window.location.href = "/cuidador.html";
       return;
      }
 
@@ -66,7 +66,7 @@ function voltarParaInicio() {
       localStorage.setItem("paciente", JSON.stringify(usuario));
       localStorage.setItem("pacienteId", usuario.id);
       localStorage.setItem("pacienteEmail", usuario.email);
-      window.location.href = "../views/paciente.html";
+      window.location.href = "/paciente.html";
       return;
      }
 

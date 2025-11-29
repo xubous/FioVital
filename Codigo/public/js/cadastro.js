@@ -17,8 +17,8 @@ function selecionarPerfil(perfil) {
 // Funcao para ir ao cadastro conforme o perfil escolhido
 function continuarParaCadastro() {
   if (perfilSelecionado === 'paciente') {
-    window.location.href = 'cadastro_paciente.html';
+    window.location.href = '/cadastro_paciente.html';
   } else if (perfilSelecionado === 'medico') {
-    window.location.href = 'cadastro_cuidador.html';
+    window.location.href = '/cadastro_cuidador.html';
   }
 }

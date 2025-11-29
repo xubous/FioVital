@@ -1,8 +1,8 @@
 // Trabalho Interdisciplinar Back-End. Desenvolvido por: Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel 
 
 // detalhe.js - VERSAO COM SIMULACAO (sem dependencia do Arduino)
-const API_URL = 'http://localhost:4567';
-const CUSTOM_VISION_API = 'http://localhost:4567/analisar-bpm';
+const API_URL = 'https://fiovital-1.onrender.com/';
+const CUSTOM_VISION_API = 'https://fiovital-1.onrender.com/analisar-bpm';
 
 // Historico local de BPM
 let historicoBPM = [];
