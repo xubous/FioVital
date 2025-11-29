@@ -3,18 +3,18 @@
 # --------------------------------------------------------------------------------
 FROM maven:3.9.5-eclipse-temurin-21 AS build
 
-# Define o diretório de trabalho principal
+# 1. Define o diretório de trabalho principal
 WORKDIR /app
 
-# Copia todo o conteúdo da pasta 'Codigo/back-end' (incluindo a subpasta 'demo') 
-# para o diretório de trabalho do container.
+# 2. Copia a subpasta Codigo/back-end para dentro do /app
 COPY Codigo/back-end/ Codigo/back-end/
 
-# *** PONTO DE CORREÇÃO CRÍTICO ***
-# Muda o diretório de trabalho para onde o pom.xml está (dentro da pasta demo)
+# 3. Muda o diretório de trabalho para onde o pom.xml está
+# C:\git\fiovital\FioVital\Codigo\back-end\demo\pom.xml
 WORKDIR Codigo/back-end/demo 
 
-# Roda o Maven. O comando agora encontra o pom.xml nesta pasta!
+# 4. Roda o Maven. Agora o pom.xml será encontrado!
+# O plugin assembly está configurado para empacotar o JAR aqui.
 RUN mvn clean install
 
 
@@ -23,16 +23,15 @@ RUN mvn clean install
 # --------------------------------------------------------------------------------
 FROM eclipse-temurin:21-jre-alpine
 
-# A porta do SparkJava (4567)
+# A porta do SparkJava
 EXPOSE 4567
 
 # Define o diretório de trabalho final
 WORKDIR /app
 
-# *** PONTO DE CORREÇÃO CRÍTICO ***
-# Copia o JAR compilado. O caminho de origem deve incluir a pasta 'demo'
-# Substitua 'FioVital-1.0.jar' pelo nome exato do arquivo JAR gerado pelo seu Maven.
-COPY --from=build /app/Codigo/back-end/demo/target/meu-projeto-1.0-SNAPSHOT.jar app.jar
+# *** AQUI ESTÁ A CORREÇÃO: USANDO O NOME EXATO DO ARQUIVO GERADO ***
+# O nome do arquivo gerado pelo Maven Assembly Plugin é: demo-1.0-SNAPSHOT-jar-with-dependencies.jar
+COPY --from=build /app/Codigo/back-end/demo/target/demo-1.0-SNAPSHOT-jar-with-dependencies.jar app.jar
 
 # Comando principal de execução
 ENTRYPOINT ["java", "-jar", "app.jar"]
