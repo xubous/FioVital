@@ -3,6 +3,8 @@
 package com.example.MAIN;
 
 import static spark.Spark.*;
+
+import com.example.DAO.Config;
 import com.example.DAO.CuidadorDao;
 import com.example.DAO.PacienteDAO;
 import com.example.CUIDADOR.Cuidador;
@@ -29,15 +31,14 @@ import javax.imageio.ImageIO;
 public class Main {
 
     private static final Dotenv dotenv = Dotenv.configure()
-                                                .filename(".env" )
-                                               .ignoreIfMissing() // evita crash se não achar (opcional)
-                                               .load();           // carrega do classpath
+                                               .ignoreIfMissing()
+                                               .load();          
 
     // Configurações do Custom Vision
-    public static final String ENDPOINT = dotenv.get("ENDPOINT");
-    public static final String PROJECT_ID = dotenv.get("PROJECT_ID");
-    public static final String PUBLISHED_NAME = dotenv.get("PUBLISHED_NAME");
-    public static final String PREDICTION_KEY = dotenv.get("PREDICTION_KEY");
+    public static final String ENDPOINT = Config.ENDPOINT;
+    public static final String PROJECT_ID = Config.PROJECT_ID;
+    public static final String PUBLISHED_NAME = Config.PUBLISHED_NAME;
+    public static final String PREDICTION_KEY = Config.PREDICTION_KEY;
 
     public static void main(String[] args) {
 
