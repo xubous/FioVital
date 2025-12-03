@@ -7,7 +7,6 @@ Fio Vital monitora continuamente os sinais cardíacos de pacientes por meio de d
 * Gabriel Ferreira Pereira
 * Gabriel Carvalho de Souza
 * Kayky Gabriel Marques
-* Daniel Campos Lacerda
 
 ## Professores responsáveis
 
@@ -15,5 +14,3 @@ Fio Vital monitora continuamente os sinais cardíacos de pacientes por meio de d
 * Luciana Mara Freitas Diniz
 
 ## Instruções de utilização
-
-[Assim que a primeira versão do sistema estiver disponível, deverá complementar com as instruções de utilização. Descreva como instalar eventuais dependências e como executar a aplicação.]
