@@ -12,5 +12,3 @@ Fio Vital monitora continuamente os sinais cardíacos de pacientes por meio de d
 
 * Ilo Amy Saldanha Rivero
 * Luciana Mara Freitas Diniz
-
-## Instruções de utilização
