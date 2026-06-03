@@ -1,386 +1,612 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fio Vital — Monitoramento Cardíaco Inteligente</title>
-    <link rel="stylesheet" href="./css/inicial.css">
-    <link rel="shortcut icon" href="./images/Logo_minimalista.png" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fio Vital — Monitoramento Cardíaco Inteligente</title>
+  <link rel="shortcut icon" href="./images/Logo_minimalista.png" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0f0f12;
+      --surface:  #16161a;
+      --surface2: #1c1c21;
+      --line:     rgba(255,255,255,0.06);
+      --line2:    rgba(255,255,255,0.10);
+      --red:      #e8193c;
+      --red-soft: rgba(232,25,60,0.12);
+      --red-mid:  rgba(232,25,60,0.22);
+      --white:    #f5f4f0;
+      --gray:     #7a7875;
+      --gray2:    #4a4845;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .hdr {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 99;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      border-bottom: 1px solid transparent;
+      transition: background .3s, border-color .3s;
+    }
+    .hdr.on { background: rgba(15,15,18,.95); border-color: var(--line); backdrop-filter: blur(10px); }
+    .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+    .brand-icon { color: var(--red); font-size: 18px; }
+    .brand-name { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 700; color: var(--white); letter-spacing: -.2px; }
+    .brand-name span { color: var(--red); }
+    .hdr-nav { display: flex; gap: 32px; }
+    .hdr-nav a { font-size: 13px; color: var(--gray); text-decoration: none; transition: color .2s; }
+    .hdr-nav a:hover { color: var(--white); }
+    .hdr-right { display: flex; gap: 10px; }
+    .h-btn { padding: 7px 16px; font-size: 13px; border-radius: 7px; text-decoration: none; font-family: 'Inter', sans-serif; transition: all .2s; cursor: pointer; }
+    .h-ghost { color: var(--gray); border: 1px solid var(--line2); background: none; }
+    .h-ghost:hover { color: var(--white); border-color: rgba(255,255,255,.2); }
+    .h-solid { background: var(--red); color: #fff; font-weight: 500; border: 1px solid transparent; }
+    .h-solid:hover { opacity: .88; }
+    .ham { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 4px; padding: 4px; }
+    .ham span { width: 20px; height: 1.5px; background: var(--white); display: block; border-radius: 2px; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 40px 60px;
+      gap: 60px;
+      align-items: center;
+    }
+
+    /* LEFT */
+    .hero-left { display: flex; flex-direction: column; gap: 0; }
+
+    .pill {
+      display: inline-flex; align-items: center; gap: 7px;
+      border: 1px solid var(--line2);
+      border-radius: 100px;
+      padding: 5px 12px;
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: .04em;
+      width: fit-content;
+      margin-bottom: 28px;
+    }
+    .pill-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; flex-shrink: 0; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -.04em;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    h1 em { color: var(--red); font-style: normal; }
+
+    .hero-p {
+      font-size: 15px;
+      color: var(--gray);
+      max-width: 400px;
+      margin-bottom: 36px;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .hero-actions { display: flex; gap: 12px; margin-bottom: 48px; flex-wrap: wrap; }
+    .btn-main {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--red); color: #fff;
+      font-size: 14px; font-weight: 500;
+      padding: 11px 22px; border-radius: 9px;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .btn-main:hover { opacity: .85; }
+    .btn-sec {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: none; color: var(--gray);
+      font-size: 14px;
+      padding: 11px 20px; border-radius: 9px;
+      border: 1px solid var(--line2);
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .btn-sec:hover { color: var(--white); border-color: rgba(255,255,255,.2); }
+
+    .stats-row { display: flex; gap: 0; border: 1px solid var(--line); border-radius: 11px; overflow: hidden; width: fit-content; }
+    .st { padding: 14px 24px; display: flex; flex-direction: column; gap: 2px; }
+    .st + .st { border-left: 1px solid var(--line); }
+    .st-n { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: var(--white); }
+    .st-l { font-size: 11px; color: var(--gray2); letter-spacing: .03em; }
+
+    /* RIGHT — CARD */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card-head { display: flex; justify-content: space-between; align-items: center; }
+    .c-live { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--gray); letter-spacing: .03em; text-transform: uppercase; }
+    .c-dot { width: 6px; height: 6px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 0 2px rgba(34,197,94,.15); animation: blink 2s infinite; }
+    .c-id { font-size: 11px; color: var(--gray2); background: var(--surface2); border: 1px solid var(--line); border-radius: 5px; padding: 3px 9px; letter-spacing: .04em; }
+
+    .bpm-row { display: flex; align-items: baseline; gap: 8px; }
+    .bpm-hrt { color: var(--red); font-size: 20px; animation: hb .85s ease-in-out infinite; }
+    @keyframes hb { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+    .bpm-n { font-family: 'Space Grotesk', sans-serif; font-size: 56px; font-weight: 700; color: var(--white); line-height: 1; letter-spacing: -.04em; }
+    .bpm-u { font-size: 13px; color: var(--gray); padding-bottom: 6px; }
+
+    .ecg-box { background: var(--surface2); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+    .ecg-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+    .ecg-lbl { font-size: 11px; color: var(--gray2); }
+    .badge { font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 100px; }
+    .badge.ok  { background: rgba(34,197,94,.1); color: #4ade80; border: 1px solid rgba(34,197,94,.2); }
+    .badge.err { background: rgba(232,25,60,.1); color: #f87171; border: 1px solid rgba(232,25,60,.2); }
+    .badge.wrn { background: rgba(245,158,11,.1); color: #fbbf24; border: 1px solid rgba(245,158,11,.2); }
+
+    .vitals { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+    .vchip {
+      background: var(--surface2);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 12px 10px;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .vchip-ico { font-size: 14px; }
+    .vchip-v { font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; color: var(--white); }
+    .vchip-l { font-size: 10px; color: var(--gray2); }
+
+    .ticker {
+      background: rgba(34,197,94,.07);
+      border: 1px solid rgba(34,197,94,.15);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #4ade80;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider { height: 1px; background: var(--line); max-width: 1200px; margin: 0 auto 0; }
+
+    /* ── SECTION ── */
+    .sec { max-width: 1200px; margin: 0 auto; padding: 80px 40px; }
+    .sec-tag { font-size: 11px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+    .sec-h { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; letter-spacing: -.03em; color: var(--white); margin-bottom: 10px; }
+    .sec-sub { font-size: 14px; color: var(--gray); font-weight: 300; margin-bottom: 48px; max-width: 440px; }
+
+    /* VIDEO */
+    .vid-wrap { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); position: relative; }
+    .vid-wrap video { width: 100%; display: block; max-height: 460px; object-fit: cover; }
+    .vid-badge {
+      position: absolute; top: 14px; left: 14px;
+      background: rgba(15,15,18,.85); backdrop-filter: blur(8px);
+      border: 1px solid var(--line2); border-radius: 100px;
+      padding: 5px 12px; font-size: 11px; color: var(--white);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* FLOW */
+    .flow { display: grid; grid-template-columns: repeat(4,1fr); background: var(--line); border-radius: 14px; overflow: hidden; gap: 1px; }
+    .fstep { background: var(--surface); padding: 28px 24px; position: relative; transition: background .2s; }
+    .fstep:hover { background: var(--surface2); }
+    .fstep-line { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .3s; }
+    .fstep:hover .fstep-line { transform: scaleX(1); }
+    .fstep-n { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; color: var(--line2); margin-bottom: 12px; }
+    .fstep-ico { font-size: 22px; margin-bottom: 12px; }
+    .fstep h3 { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 8px; }
+    .fstep p { font-size: 13px; color: var(--gray); line-height: 1.6; font-weight: 300; }
+
+    /* FEATURES */
+    .feat { display: grid; grid-template-columns: repeat(3,1fr); background: var(--line); border-radius: 14px; overflow: hidden; gap: 1px; }
+    .fc { background: var(--surface); padding: 28px; transition: background .2s; }
+    .fc:hover { background: var(--surface2); }
+    .fc-ico { width: 38px; height: 38px; background: var(--red-soft); border: 1px solid var(--red-mid); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: var(--red); font-size: 14px; margin-bottom: 16px; }
+    .fc h3 { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 8px; }
+    .fc p { font-size: 13px; color: var(--gray); line-height: 1.6; font-weight: 300; }
+
+    /* CTA */
+    .cta-wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; }
+    .cta-box {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 60px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 40px;
+    }
+    .cta-left h2 { font-family: 'Space Grotesk', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -.03em; color: var(--white); margin-bottom: 8px; }
+    .cta-left p { font-size: 14px; color: var(--gray); font-weight: 300; }
+    .cta-right { display: flex; gap: 10px; flex-shrink: 0; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--line); }
+    .foot-inner { max-width: 1200px; margin: 0 auto; padding: 48px 40px 32px; display: grid; grid-template-columns: 1fr auto; gap: 40px; }
+    .foot-brand p { font-size: 13px; color: var(--gray); max-width: 240px; margin-top: 10px; font-weight: 300; line-height: 1.6; }
+    .foot-cols { display: flex; gap: 48px; }
+    .foot-col h4 { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .1em; color: var(--gray2); margin-bottom: 14px; }
+    .foot-col a { display: block; font-size: 13px; color: var(--gray); text-decoration: none; margin-bottom: 8px; transition: color .2s; }
+    .foot-col a:hover { color: var(--white); }
+    .foot-bottom { max-width: 1200px; margin: 0 auto; padding: 20px 40px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 12px; color: var(--gray2); }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; padding-top: 90px; }
+      .flow { grid-template-columns: repeat(2,1fr); }
+      .feat { grid-template-columns: repeat(2,1fr); }
+      .cta-box { grid-template-columns: 1fr; }
+      .cta-right { flex-wrap: wrap; }
+      .foot-inner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .hdr-nav { display: none; }
+      .ham { display: flex; }
+      .hdr-nav.open { display: flex; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--surface); padding: 16px 24px; border-bottom: 1px solid var(--line); gap: 16px; }
+      .flow, .feat { grid-template-columns: 1fr; }
+      .hero { padding: 90px 24px 48px; }
+      .sec, .cta-wrap { padding-left: 24px; padding-right: 24px; }
+      h1 { font-size: 36px; }
+      .stats-row { flex-direction: column; width: 100%; }
+      .st + .st { border-left: none; border-top: 1px solid var(--line); }
+      .foot-cols { flex-direction: column; gap: 24px; }
+      .foot-bottom { flex-direction: column; gap: 6px; }
+      .hdr { padding: 0 24px; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header class="header" id="header">
-        <div class="nav-container">
-            <div class="logo-wrap">
-                <img src="./images/Logo_minimalista.png" alt="Fio Vital" class="logo-img">
-                <span class="logo-text">Fio <strong>Vital</strong></span>
-            </div>
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#como-funciona">Como Funciona</a></li>
-                    <li><a href="#recursos">Recursos</a></li>
-                    <li><a href="#contato">Contato</a></li>
-                </ul>
-            </nav>
-            <div class="nav-actions">
-                <a href="./login.html" class="btn-outline">Entrar</a>
-                <a href="./cadastro.html" class="btn-primary">Começar Agora</a>
-            </div>
-            <button class="nav-toggle" id="navToggle" aria-label="Menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </header>
+<!-- HEADER -->
+<header class="hdr" id="hdr">
+  <a href="#top" class="brand">
+    <i class="fas fa-heartbeat brand-icon"></i>
+    <span class="brand-name">Fio <span>Vital</span></span>
+  </a>
+  <nav class="hdr-nav" id="nav">
+    <a href="#top">Início</a>
+    <a href="#como-funciona">Como Funciona</a>
+    <a href="#recursos">Recursos</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <div class="hdr-right">
+    <a href="./login.html" class="h-btn h-ghost">Entrar</a>
+    <a href="./cadastro.html" class="h-btn h-solid">Começar Agora</a>
+  </div>
+  <button class="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
 
-    <!-- HERO -->
-    <section class="hero" id="inicio">
-        <div class="hero-bg-grid"></div>
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    Sistema Ativo — Monitoramento em Tempo Real
-                </div>
-                <h1>Monitoramento<br><span class="gradient-text">Cardíaco</span><br>Inteligente</h1>
-                <p class="hero-desc">Tecnologia de ponta para monitorar sinais vitais continuamente, com análise por IA e alertas instantâneos para cuidadores e pacientes.</p>
-                <div class="hero-ctas">
-                    <a href="./cadastro.html" class="btn-primary btn-lg">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                        Monitorar Agora
-                    </a>
-                    <a href="#como-funciona" class="btn-ghost btn-lg">Ver como funciona ↓</a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat"><span class="stat-num">24h</span><span class="stat-lbl">Monitoramento</span></div>
-                    <div class="stat-divider"></div>
-                    <div class="stat"><span class="stat-num">99%</span><span class="stat-lbl">Precisão</span></div>
-                    <div class="stat-divider"></div>
-                    <div class="stat"><span class="stat-num">&lt;5s</span><span class="stat-lbl">Latência de Alerta</span></div>
-                </div>
-            </div>
+<!-- HERO -->
+<section class="hero" id="top">
 
-            <!-- MONITOR CARD -->
-            <div class="monitor-card">
-                <div class="monitor-header">
-                    <div class="monitor-title">
-                        <div class="live-dot"></div>
-                        Monitor Cardíaco — Ao Vivo
-                    </div>
-                    <span class="monitor-id">PAC-0042</span>
-                </div>
+  <!-- LEFT -->
+  <div class="hero-left">
+    <div class="pill">
+      <span class="pill-dot"></span>
+      Sistema ativo — monitoramento em tempo real
+    </div>
 
-                <div class="bpm-display">
-                    <div class="bpm-heart">❤</div>
-                    <div class="bpm-number" id="heroBPM">72</div>
-                    <div class="bpm-unit">BPM</div>
-                </div>
+    <h1>Monitoramento<br><em>cardíaco</em><br>inteligente</h1>
 
-                <div class="ecg-wrap">
-                    <canvas id="heroECG" width="420" height="90"></canvas>
-                    <div class="ecg-labels">
-                        <span>ECG em Tempo Real</span>
-                        <span id="heroStatus" class="status-badge normal">Normal</span>
-                    </div>
-                </div>
+    <p class="hero-p">Tecnologia de ponta para monitorar sinais vitais continuamente, com análise por IA e alertas instantâneos para cuidadores e pacientes.</p>
 
-                <div class="vitals-row">
-                    <div class="vital-pill">
-                        <span class="vp-icon">🫁</span>
-                        <div>
-                            <div class="vp-val" id="heroSPO2">98%</div>
-                            <div class="vp-lbl">SpO₂</div>
-                        </div>
-                    </div>
-                    <div class="vital-pill">
-                        <span class="vp-icon">🌡️</span>
-                        <div>
-                            <div class="vp-val" id="heroTemp">36.8°C</div>
-                            <div class="vp-lbl">Temperatura</div>
-                        </div>
-                    </div>
-                    <div class="vital-pill">
-                        <span class="vp-icon">💧</span>
-                        <div>
-                            <div class="vp-val" id="heroPA">120/80</div>
-                            <div class="vp-lbl">Pressão</div>
-                        </div>
-                    </div>
-                </div>
+    <div class="hero-actions">
+      <a href="./cadastro.html" class="btn-main">
+        <i class="fas fa-heartbeat"></i>
+        Monitorar Agora
+      </a>
+      <a href="#como-funciona" class="btn-sec">Como funciona →</a>
+    </div>
 
-                <div class="alert-ticker" id="heroAlertTicker">
-                    <span class="ticker-icon">✓</span>
-                    <span id="tickerMsg">Todos os parâmetros dentro do normal</span>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="stats-row">
+      <div class="st"><span class="st-n">24h</span><span class="st-l">Monitoramento</span></div>
+      <div class="st"><span class="st-n">99%</span><span class="st-l">Precisão</span></div>
+      <div class="st"><span class="st-n">&lt;5s</span><span class="st-l">Latência de alerta</span></div>
+    </div>
+  </div>
 
-    <!-- VIDEO SECTION -->
-    <section class="video-section">
-        <div class="container">
-            <div class="section-label">Demonstração</div>
-            <h2 class="section-title">Veja o Sistema em Ação</h2>
-            <p class="section-sub">Acompanhe como o Fio Vital coleta, processa e exibe os dados cardíacos em tempo real</p>
-            <div class="video-wrapper">
-                <video src="./images/video.mp4" controls poster="" preload="metadata"></video>
-                <div class="video-overlay-badge">
-                    <span class="live-dot"></span> Demonstração Real
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- RIGHT — MONITOR CARD -->
+  <div class="card">
+    <div class="card-head">
+      <div class="c-live"><span class="c-dot"></span> Monitor Cardíaco — Ao Vivo</div>
+      <span class="c-id">PAC-0042</span>
+    </div>
 
-    <!-- COMO FUNCIONA -->
-    <section class="how-it-works" id="como-funciona">
-        <div class="container">
-            <div class="section-label">Fluxo</div>
-            <h2 class="section-title">Como o Monitoramento Funciona</h2>
-            <p class="section-sub">Da coleta do sinal à notificação em menos de 5 segundos</p>
+    <div class="bpm-row">
+      <span class="bpm-hrt">♥</span>
+      <span class="bpm-n" id="heroBPM">72</span>
+      <span class="bpm-u">BPM</span>
+    </div>
 
-            <div class="flow-steps">
-                <div class="flow-step">
-                    <div class="step-num">01</div>
-                    <div class="step-icon">📡</div>
-                    <h3>Coleta Contínua</h3>
-                    <p>Sensores IoT capturam frequência cardíaca, SpO₂ e temperatura 24h por dia com precisão clínica</p>
-                </div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-step">
-                    <div class="step-num">02</div>
-                    <div class="step-icon">🧠</div>
-                    <h3>Análise por IA</h3>
-                    <p>Algoritmos detectam arritmias, variações críticas e tendências em tempo real com baixa latência</p>
-                </div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-step">
-                    <div class="step-num">03</div>
-                    <div class="step-icon">🔔</div>
-                    <h3>Alerta Imediato</h3>
-                    <p>Notificações instantâneas para cuidadores e familiares com localização e dados do paciente</p>
-                </div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-step">
-                    <div class="step-num">04</div>
-                    <div class="step-icon">📊</div>
-                    <h3>Dashboard Completo</h3>
-                    <p>Histórico, tendências e análise preditiva para tomada de decisão clínica rápida</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="ecg-box">
+      <canvas id="heroECG" width="360" height="70" style="width:100%;display:block;"></canvas>
+      <div class="ecg-foot">
+        <span class="ecg-lbl">ECG em tempo real</span>
+        <span class="badge ok" id="heroStatus">Normal</span>
+      </div>
+    </div>
 
-    <!-- FEATURES -->
-    <section class="features" id="recursos">
-        <div class="container">
-            <div class="section-label">Recursos</div>
-            <h2 class="section-title">Por que escolher o Fio Vital?</h2>
-            <div class="features-grid">
-                <div class="feature-card fc-highlight">
-                    <div class="fc-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                    </div>
-                    <h3>ECG em Tempo Real</h3>
-                    <p>Visualização do eletrocardiograma ao vivo com detecção automática de padrões anômalos</p>
-                </div>
-                <div class="feature-card">
-                    <div class="fc-icon fc-yellow">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-                    </div>
-                    <h3>Alertas Instantâneos</h3>
-                    <p>Notificações push em menos de 5 segundos para anomalias cardíacas críticas</p>
-                </div>
-                <div class="feature-card">
-                    <div class="fc-icon fc-teal">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-                    </div>
-                    <h3>Dashboard Profissional</h3>
-                    <p>Painel completo com histórico, tendências e gestão de múltiplos pacientes</p>
-                </div>
-                <div class="feature-card">
-                    <div class="fc-icon fc-blue">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    </div>
-                    <h3>Segurança Total</h3>
-                    <p>Criptografia de ponta a ponta e conformidade com normas de privacidade de dados de saúde</p>
-                </div>
-                <div class="feature-card">
-                    <div class="fc-icon fc-purple">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-                    </div>
-                    <h3>Monitoramento 24h</h3>
-                    <p>Coleta contínua sem interrupção, inclusive durante o sono e atividades físicas</p>
-                </div>
-                <div class="feature-card">
-                    <div class="fc-icon fc-green">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    </div>
-                    <h3>Equipe Conectada</h3>
-                    <p>Comunicação integrada entre pacientes, cuidadores e profissionais de saúde</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="vitals">
+      <div class="vchip">
+        <span class="vchip-ico">🫁</span>
+        <span class="vchip-v" id="heroSPO2">98%</span>
+        <span class="vchip-l">SpO₂</span>
+      </div>
+      <div class="vchip">
+        <span class="vchip-ico">🌡️</span>
+        <span class="vchip-v" id="heroTemp">36.8°</span>
+        <span class="vchip-l">Temperatura</span>
+      </div>
+      <div class="vchip">
+        <span class="vchip-ico">💧</span>
+        <span class="vchip-v" id="heroPA">120/80</span>
+        <span class="vchip-l">Pressão</span>
+      </div>
+    </div>
 
-    <!-- CTA -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-inner">
-                <div class="cta-glow"></div>
-                <div class="section-label light">Comece Hoje</div>
-                <h2>Proteja quem você ama com tecnologia de ponta</h2>
-                <p>Junte-se a pacientes e profissionais que já confiam no Fio Vital</p>
-                <div class="cta-btns">
-                    <a href="./cadastro.html" class="btn-primary btn-lg">Criar Conta Gratuita</a>
-                    <a href="./login.html" class="btn-ghost-white btn-lg">Já tenho conta</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="ticker" id="alertStrip">
+      <i class="fas fa-check-circle" style="font-size:13px;"></i>
+      <span id="tickerMsg">Todos os parâmetros dentro do normal</span>
+    </div>
+  </div>
 
-    <!-- FOOTER -->
-    <footer class="footer" id="contato">
-        <div class="container">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <div class="logo-wrap">
-                        <img src="./images/Logo_minimalista.png" alt="Fio Vital" class="logo-img" style="width:32px;height:32px">
-                        <span class="logo-text">Fio <strong>Vital</strong></span>
-                    </div>
-                    <p>Monitoramento cardíaco inteligente para uma vida mais segura e conectada.</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-col">
-                        <h4>Produto</h4>
-                        <a href="#">Monitoramento</a>
-                        <a href="#">Dashboard</a>
-                        <a href="#">Alertas</a>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Suporte</h4>
-                        <a href="#">Central de Ajuda</a>
-                        <a href="#">Documentação</a>
-                        <a href="#">Contato</a>
-                    </div>
-                    <div class="footer-col">
-                        <h4>Empresa</h4>
-                        <a href="#">Sobre Nós</a>
-                        <a href="#">Privacidade</a>
-                        <a href="#">Termos</a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 Fio Vital. Todos os direitos reservados.</p>
-                <p class="footer-credits">Desenvolvido por Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel</p>
-            </div>
-        </div>
-    </footer>
+</section>
+
+<div class="divider"></div>
+
+<!-- VIDEO -->
+<div class="sec">
+  <div class="sec-tag">Demonstração</div>
+  <h2 class="sec-h">Veja o sistema em ação</h2>
+  <p class="sec-sub">Acompanhe como o Fio Vital coleta, processa e exibe os dados cardíacos em tempo real</p>
+  <div class="vid-wrap">
+    <video src="./images/video.mp4" controls preload="metadata"></video>
+    <div class="vid-badge"><span class="c-dot"></span> Demonstração real</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- COMO FUNCIONA -->
+<div class="sec" id="como-funciona">
+  <div class="sec-tag">Fluxo</div>
+  <h2 class="sec-h">Como o monitoramento funciona</h2>
+  <p class="sec-sub">Da coleta do sinal à notificação em menos de 5 segundos</p>
+  <div class="flow">
+    <div class="fstep">
+      <div class="fstep-line"></div>
+      <div class="fstep-n">01</div>
+      <div class="fstep-ico">📡</div>
+      <h3>Coleta Contínua</h3>
+      <p>Sensores IoT capturam frequência cardíaca, SpO₂ e temperatura 24h por dia com precisão clínica</p>
+    </div>
+    <div class="fstep">
+      <div class="fstep-line"></div>
+      <div class="fstep-n">02</div>
+      <div class="fstep-ico">🧠</div>
+      <h3>Análise por IA</h3>
+      <p>Algoritmos detectam arritmias, variações críticas e tendências em tempo real com baixa latência</p>
+    </div>
+    <div class="fstep">
+      <div class="fstep-line"></div>
+      <div class="fstep-n">03</div>
+      <div class="fstep-ico">🔔</div>
+      <h3>Alerta Imediato</h3>
+      <p>Notificações instantâneas para cuidadores e familiares com localização e dados do paciente</p>
+    </div>
+    <div class="fstep">
+      <div class="fstep-line"></div>
+      <div class="fstep-n">04</div>
+      <div class="fstep-ico">📊</div>
+      <h3>Dashboard Completo</h3>
+      <p>Histórico, tendências e análise preditiva para tomada de decisão clínica rápida</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<div class="sec" id="recursos">
+  <div class="sec-tag">Recursos</div>
+  <h2 class="sec-h">Por que escolher o Fio Vital?</h2>
+  <p class="sec-sub">Tudo que você precisa para um monitoramento cardíaco confiável e eficiente</p>
+  <div class="feat">
+    <div class="fc">
+      <div class="fc-ico"><i class="fas fa-heartbeat"></i></div>
+      <h3>ECG em Tempo Real</h3>
+      <p>Visualização do eletrocardiograma ao vivo com detecção automática de padrões anômalos</p>
+    </div>
+    <div class="fc">
+      <div class="fc-ico"><i class="fas fa-bell"></i></div>
+      <h3>Alertas Instantâneos</h3>
+      <p>Notificações push em menos de 5 segundos para anomalias cardíacas críticas</p>
+    </div>
+    <div class="fc">
+      <div class="fc-ico"><i class="fas fa-chart-bar"></i></div>
+      <h3>Dashboard Profissional</h3>
+      <p>Painel completo com histórico, tendências e gestão de múltiplos pacientes</p>
+    </div>
+    <div class="fc">
+      <div class="fc-ico"><i class="fas fa-shield-alt"></i></div>
+      <h3>Segurança Total</h3>
+      <p>Criptografia de ponta a ponta e conformidade com normas de privacidade de dados de saúde</p>
+    </div>
+    <div class="fc">
+      <div class="fc-ico"><i class="fas fa-clock"></i></div>
+      <h3>Monitoramento 24h</h3>
+      <p>Coleta contínua sem interrupção, inclusive durante o sono e atividades físicas</p>
+    </div>
+    <div class="fc">
+      <div class="fc-ico"><i class="fas fa-users"></i></div>
+      <h3>Equipe Conectada</h3>
+      <p>Comunicação integrada entre pacientes, cuidadores e profissionais de saúde</p>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<div class="cta-wrap">
+  <div class="cta-box">
+    <div class="cta-left">
+      <div class="sec-tag" style="margin-bottom:8px;">Comece Hoje</div>
+      <h2>Proteja quem você ama com tecnologia de ponta</h2>
+      <p>Junte-se a pacientes e profissionais que já confiam no Fio Vital</p>
+    </div>
+    <div class="cta-right">
+      <a href="./cadastro.html" class="btn-main"><i class="fas fa-user-plus"></i> Criar Conta Gratuita</a>
+      <a href="./login.html" class="btn-sec">Já tenho conta</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="contato">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <a href="#top" class="brand" style="display:inline-flex;">
+        <i class="fas fa-heartbeat brand-icon"></i>
+        <span class="brand-name">Fio <span>Vital</span></span>
+      </a>
+      <p>Monitoramento cardíaco inteligente para uma vida mais segura e conectada.</p>
+    </div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <h4>Produto</h4>
+        <a href="#">Monitoramento</a>
+        <a href="#">Dashboard</a>
+        <a href="#">Alertas</a>
+      </div>
+      <div class="foot-col">
+        <h4>Suporte</h4>
+        <a href="#">Central de Ajuda</a>
+        <a href="#">Documentação</a>
+        <a href="#">Contato</a>
+      </div>
+      <div class="foot-col">
+        <h4>Empresa</h4>
+        <a href="#">Sobre Nós</a>
+        <a href="#">Privacidade</a>
+        <a href="#">Termos</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2025 Fio Vital. Todos os direitos reservados.</span>
+    <span>Desenvolvido por Gabriel Ferreira, Gabriel Carvalho e Kayky Gabriel</span>
+  </div>
+</footer>
 
 <script>
-// ─── ECG Simulation ───────────────────────────────────────────────
-const canvas = document.getElementById('heroECG');
-const ctx = canvas.getContext('2d');
-const W = canvas.width, H = canvas.height;
-let t = 0;
-const points = [];
-const MAX = W;
+  // ECG
+  const cv = document.getElementById('heroECG');
+  const cx = cv.getContext('2d');
+  const CW = cv.width, CH = cv.height;
+  let t = 0, pts = [];
 
-function ecgPoint(x) {
-    const cycle = x % 200;
-    if (cycle < 60) return 0;
-    if (cycle < 70) return -4 + (cycle-60)*0.4;
-    if (cycle < 80) return 8 - (cycle-70)*1.2;
-    if (cycle < 95) return -8 + (cycle-80)*0.53;
-    if (cycle < 110) return 0 + (cycle-95)*2.7;
-    if (cycle < 120) return 40 - (cycle-110)*4;
-    if (cycle < 130) return 0;
-    if (cycle < 150) return 4 - (cycle-130)*0.2;
+  function ep(x) {
+    const c = x % 200;
+    if (c < 60) return 0;
+    if (c < 70) return -3+(c-60)*.3;
+    if (c < 80) return 6-(c-70)*.9;
+    if (c < 95) return -5+(c-80)*.33;
+    if (c < 110) return 0+(c-95)*2.3;
+    if (c < 120) return 34.5-(c-110)*3.45;
+    if (c < 130) return 0;
+    if (c < 150) return 2.5-(c-130)*.125;
     return 0;
-}
+  }
 
-function drawECG() {
-    ctx.clearRect(0, 0, W, H);
-    // Grid
-    ctx.strokeStyle = 'rgba(220,20,61,0.08)';
-    ctx.lineWidth = 1;
-    for (let gx = 0; gx < W; gx += 40) { ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke(); }
-    for (let gy = 0; gy < H; gy += 20) { ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke(); }
+  function draw() {
+    cx.clearRect(0,0,CW,CH);
+    // subtle grid
+    cx.strokeStyle = 'rgba(232,25,60,0.06)';
+    cx.lineWidth = .5;
+    for(let x=0;x<CW;x+=36){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,CH);cx.stroke();}
+    for(let y=0;y<CH;y+=18){cx.beginPath();cx.moveTo(0,y);cx.lineTo(CW,y);cx.stroke();}
 
-    points.push(ecgPoint(t));
-    if (points.length > MAX) points.shift();
+    pts.push(ep(t));
+    if(pts.length>CW) pts.shift();
 
-    const grad = ctx.createLinearGradient(0, 0, W, 0);
-    grad.addColorStop(0, 'rgba(220,20,61,0)');
-    grad.addColorStop(0.3, 'rgba(220,20,61,0.8)');
-    grad.addColorStop(1, '#DC143D');
-    ctx.beginPath();
-    ctx.strokeStyle = grad;
-    ctx.lineWidth = 2.2;
-    ctx.shadowBlur = 6;
-    ctx.shadowColor = '#DC143D';
-    for (let i = 0; i < points.length; i++) {
-        const px = i;
-        const py = H/2 - points[i];
-        i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
-    }
-    ctx.stroke();
-    ctx.shadowBlur = 0;
-    t += 2.5;
-}
+    const g=cx.createLinearGradient(0,0,CW,0);
+    g.addColorStop(0,'rgba(232,25,60,0)');
+    g.addColorStop(.4,'rgba(232,25,60,.55)');
+    g.addColorStop(1,'#e8193c');
+    cx.beginPath();
+    cx.strokeStyle=g;
+    cx.lineWidth=1.6;
+    cx.shadowBlur=4;
+    cx.shadowColor='#e8193c';
+    pts.forEach((v,i)=>{ i===0?cx.moveTo(i,CH/2-v):cx.lineTo(i,CH/2-v); });
+    cx.stroke();
+    cx.shadowBlur=0;
+    t+=2.5;
+  }
+  setInterval(draw, 30);
 
-setInterval(drawECG, 30);
-
-// ─── BPM & Vitals Simulation ──────────────────────────────────────
-let baseBPM = 72;
-function updateVitals() {
-    const delta = (Math.random() - 0.48) * 3;
-    baseBPM = Math.max(55, Math.min(110, baseBPM + delta));
-    const bpm = Math.round(baseBPM);
-    document.getElementById('heroBPM').textContent = bpm;
-
-    const spo2 = (97 + Math.random() * 2).toFixed(0);
-    document.getElementById('heroSPO2').textContent = spo2 + '%';
-
-    const temp = (36.4 + Math.random() * 0.8).toFixed(1);
-    document.getElementById('heroTemp').textContent = temp + '°C';
-
-    const statusEl = document.getElementById('heroStatus');
-    const ticker = document.getElementById('tickerMsg');
-    if (bpm > 100) {
-        statusEl.textContent = 'Taquicardia';
-        statusEl.className = 'status-badge danger';
-        ticker.textContent = '⚠ Frequência elevada detectada — cuidador notificado';
-        document.getElementById('heroAlertTicker').style.background = 'rgba(220,38,38,0.15)';
-        document.getElementById('heroAlertTicker').style.borderColor = 'rgba(220,38,38,0.4)';
-    } else if (bpm < 60) {
-        statusEl.textContent = 'Bradicardia';
-        statusEl.className = 'status-badge warning';
-        ticker.textContent = '⚠ Frequência abaixo do normal — monitorando';
-        document.getElementById('heroAlertTicker').style.background = 'rgba(245,158,11,0.12)';
-        document.getElementById('heroAlertTicker').style.borderColor = 'rgba(245,158,11,0.3)';
+  // Vitals
+  let bpm = 72;
+  function upd() {
+    bpm = Math.max(55, Math.min(112, bpm+(Math.random()-.48)*3));
+    const b = Math.round(bpm);
+    document.getElementById('heroBPM').textContent = b;
+    document.getElementById('heroSPO2').textContent = (97+Math.random()*2).toFixed(0)+'%';
+    document.getElementById('heroTemp').textContent = (36.4+Math.random()*.8).toFixed(1)+'°';
+    const s=document.getElementById('heroStatus');
+    const st=document.getElementById('alertStrip');
+    const msg=document.getElementById('tickerMsg');
+    const ico=st.querySelector('i');
+    if(b>100){
+      s.textContent='Taquicardia';s.className='badge err';
+      msg.textContent='⚠ Frequência elevada — cuidador notificado';
+      st.style.cssText='background:rgba(232,25,60,.08);border-color:rgba(232,25,60,.2);color:#f87171;display:flex;align-items:center;gap:8px;border-radius:8px;padding:10px 14px;font-size:12px;';
+    } else if(b<60){
+      s.textContent='Bradicardia';s.className='badge wrn';
+      msg.textContent='⚠ Frequência abaixo do normal — monitorando';
+      st.style.cssText='background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.2);color:#fbbf24;display:flex;align-items:center;gap:8px;border-radius:8px;padding:10px 14px;font-size:12px;';
     } else {
-        statusEl.textContent = 'Normal';
-        statusEl.className = 'status-badge normal';
-        ticker.textContent = '✓ Todos os parâmetros dentro do normal';
-        document.getElementById('heroAlertTicker').style.background = 'rgba(16,185,129,0.1)';
-        document.getElementById('heroAlertTicker').style.borderColor = 'rgba(16,185,129,0.3)';
+      s.textContent='Normal';s.className='badge ok';
+      msg.textContent='Todos os parâmetros dentro do normal';
+      st.style.cssText='background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.15);color:#4ade80;display:flex;align-items:center;gap:8px;border-radius:8px;padding:10px 14px;font-size:12px;';
     }
-}
-setInterval(updateVitals, 2000);
+  }
+  setInterval(upd, 2000);
 
-// ─── Header scroll ────────────────────────────────────────────────
-window.addEventListener('scroll', () => {
-    document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
-});
+  // Header
+  window.addEventListener('scroll',()=>{
+    document.getElementById('hdr').classList.toggle('on',scrollY>30);
+  });
 
-// ─── Nav toggle ───────────────────────────────────────────────────
-document.getElementById('navToggle').addEventListener('click', () => {
-    document.querySelector('.nav-menu').classList.toggle('open');
-});
+  // Hamburger
+  document.getElementById('ham').addEventListener('click',()=>{
+    document.getElementById('nav').classList.toggle('open');
+  });
 </script>
 </body>
 </html>
